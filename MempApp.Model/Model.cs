@@ -32,6 +32,7 @@ namespace MempApp.Model
 		public List<TimeInfo> TimeInfoList { get; set; }
 		public DateTime DeadLine { get; set; } = default;
 		public DateTime PlanDate { get; set; } = default;
+		public DateTime RegistedDate { get; set; } = default;
 
 		public string TaskName
 		{

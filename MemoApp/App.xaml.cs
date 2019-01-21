@@ -30,6 +30,11 @@ namespace MemoApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+			using (var db = new MemoAppContext())
+			{
+				db.Databse.Migrate();
+			}
         }
 
         /// <summary>

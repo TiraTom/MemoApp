@@ -10,42 +10,39 @@
 	Width="80"
 	Height="100"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	Loaded="Page_Loaded"
 	mc:Ignorable="d">
 
-	<StackPanel>
-		<ComboBox Header="{x:Bind TaskChoiceLabel}" ItemsSource="{x:Bind TaskList}">
+	<StackPanel Orientation="Vertical">
+		<ComboBox Header="{x:Bind ViewModel.TaskChoiceLabel}" ItemsSource="{x:Bind TaskList}">
 			<ComboBox.ItemTemplate>
 				<DataTemplate x:DataType="{x:Bind EachTask}">
 					<StackPanel>
-						<TextBlock Text="{x:Bind EachTask.Name}" />
+						<TextBlock Text="{x:Bind Name}" />
 					</StackPanel>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 
-		<StackPanel FlowDirection="LeftToRight">
-			<TextBlock Text="{x:Bind StartLabel}" />
-			<TextBlock Text="{x:Bind PauseLabel}" />
-			<TextBlock Text="{x:Bind FinishLabel}" />
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Text="{x:Bind ViewModel.StartLabel}" />
+			<TextBlock Text="{x:Bind ViewModel.PauseLabel}" />
+			<TextBlock Text="{x:Bind ViewModel.FinishLabel}" />
 		</StackPanel>
 
 		<TextBox
 			Width="80"
 			Height="20"
 			AcceptsReturn="True"
-			Header="{x:Bind MemoLabel}"
+			Header="{x:Bind ViewModel.MemoLabel}"
 			TextWrapping="Wrap" />
-		
-		<TextBox
-			Width="80"
-			Height="5"
-			
 
-		<StackPanel>
-			<Button Content="{x:Bind HashButtonLabel}"
-					Click="{x:Bind ShowHashList}" />
-			<Button Content="{x:Bind RegisterButtonLabel}"
-					Click="{x:Bind MemoRegister}"
+		<TextBox Width="80" Height="5" />
+
+
+		<StackPanel Orientation="Horizontal">
+			<Button Click="{x:Bind ViewModel.ShowHashList}" Content="{x:Bind ViewModel.HashButtonLabel}" />
+			<Button Click="{x:Bind ViewModel.MemoRegister}" Content="{x:Bind ViewModel.RegisterButtonLabel}" />
 		</StackPanel>
 
 
