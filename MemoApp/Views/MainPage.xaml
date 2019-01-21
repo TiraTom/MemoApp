@@ -1,0 +1,54 @@
+﻿<Page
+	x:Class="MemoApp.Views.MainPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:MemoApp"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:viewmodels="using:MemoApp.ViewModels"
+	xmlns:views="using:MemoApp.Views"
+	Width="80"
+	Height="100"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	mc:Ignorable="d">
+
+	<StackPanel>
+		<ComboBox Header="{x:Bind TaskChoiceLabel}" ItemsSource="{x:Bind TaskList}">
+			<ComboBox.ItemTemplate>
+				<DataTemplate x:DataType="{x:Bind EachTask}">
+					<StackPanel>
+						<TextBlock Text="{x:Bind EachTask.Name}" />
+					</StackPanel>
+				</DataTemplate>
+			</ComboBox.ItemTemplate>
+		</ComboBox>
+
+		<StackPanel FlowDirection="LeftToRight">
+			<TextBlock Text="{x:Bind StartLabel}" />
+			<TextBlock Text="{x:Bind PauseLabel}" />
+			<TextBlock Text="{x:Bind FinishLabel}" />
+		</StackPanel>
+
+		<TextBox
+			Width="80"
+			Height="20"
+			AcceptsReturn="True"
+			Header="{x:Bind MemoLabel}"
+			TextWrapping="Wrap" />
+		
+		<TextBox
+			Width="80"
+			Height="5"
+			
+
+		<StackPanel>
+			<Button Content="{x:Bind HashButtonLabel}"
+					Click="{x:Bind ShowHashList}" />
+			<Button Content="{x:Bind RegisterButtonLabel}"
+					Click="{x:Bind MemoRegister}"
+		</StackPanel>
+
+
+
+	</StackPanel>
+</Page>
