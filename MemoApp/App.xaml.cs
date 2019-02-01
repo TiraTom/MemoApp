@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MempApp.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,7 +35,7 @@ namespace MemoApp
 
 			using (var db = new MemoAppContext())
 			{
-				db.Databse.Migrate();
+				db.Database.Migrate();
 			}
         }
 

@@ -17,11 +17,11 @@ namespace MemoApp.ViewModels
 			View = mainPage;
 		}
 
-		private void Page_Loaded(object sender, RoutedEventArgs e)
+		public void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			using (var db = new MemoAppContext())
 			{
-				TaskList.ItemSource = db.TaskList.ToList();
+				TaskListData = db.EachTasks.ToList();
 			}
 		}
 
@@ -32,30 +32,34 @@ namespace MemoApp.ViewModels
 		public string MemoLabel { get; set; } = "メモを残す";
 		public string HashButtonLabel { get; set; } = "ハッシュ";
 		public string RegisterButtonLabel { get; set; } = "登録";
+		public List<EachTask> TaskListData { get; set; } = default;
+		public List<HashItem> HashItemListData { get; set; } = default;
+		public List<Memo> MemoListData { get; set; } = default;
 
 		public void ShowHashList(object sender, RoutedEventArgs e)
 		{
 			using (var db = new MemoAppContext())
 			{
-				//HashItemList.ItemSource = db.HashItemList.ToList();
+				HashItemListData = db.HashItems.ToList();
 			}
 		}
 
-		private void MemoRegister(object sender, RoutedEventArgs e)
+		public void MemoRegister(object sender, RoutedEventArgs e)
 		{
 			using (var db = new MemoAppContext())
 			{
 				Memo newMemo = new Memo
 				{
-					this.CreateTime = DateTime.Now,
-					this.Content = MemoLabell 
+					CreateTime = DateTime.Now,
+					Content = MemoLabel
 				};
 
-				db.MemoList.Add(newMemo);
+				db.Memos.Add(newMemo);
 				db.SaveChanges();
 
-				MemoList.ItemSource = db.MemoList.ToList();
+				MemoListData = db.Memos.ToList();
 
 			}
 		}
 	}
+}

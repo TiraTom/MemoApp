@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoApp", "MemoApp\MemoApp.csproj", "{C593D27C-9A05-4503-82C3-465AE8515196}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MempApp.Model", "MempApp.Model\MempApp.Model.csproj", "{8BAFD948-A9E0-45D9-96B9-4311B5618F5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MempApp.Model", "MempApp.Model\MempApp.Model.csproj", "{8BAFD948-A9E0-45D9-96B9-4311B5618F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoApp.Migrations.StartUp", "MemoApp.Migrations.StartUp\MemoApp.Migrations.StartUp.csproj", "{EF962693-6944-41C0-A27C-018691A837E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoApp.Migrations.StartUp", "MemoApp.Migrations.StartUp\MemoApp.Migrations.StartUp.csproj", "{EF962693-6944-41C0-A27C-018691A837E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

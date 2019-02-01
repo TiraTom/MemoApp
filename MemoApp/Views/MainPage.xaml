@@ -5,47 +5,88 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:MemoApp"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:model="using:MempApp.Model"
 	xmlns:viewmodels="using:MemoApp.ViewModels"
 	xmlns:views="using:MemoApp.Views"
-	Width="80"
-	Height="100"
+	Width="200"
+	Height="300"
+	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	Loaded="Page_Loaded"
+	Loaded="ViewModel.Page_Loaded"
 	mc:Ignorable="d">
 
-	<StackPanel Orientation="Vertical">
-		<ComboBox Header="{x:Bind ViewModel.TaskChoiceLabel}" ItemsSource="{x:Bind TaskList}">
+	<StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+		<Button HorizontalAlignment="Right" Content="三" Click="{}" />
+		<ComboBox
+			Width="110"
+			Margin="5,5,5,5"
+			Header="{x:Bind ViewModel.TaskChoiceLabel}"
+			ItemsSource="{x:Bind ViewModel.TaskListData}">
 			<ComboBox.ItemTemplate>
-				<DataTemplate x:DataType="{x:Bind EachTask}">
+				<DataTemplate x:DataType="model:EachTask">
 					<StackPanel>
-						<TextBlock Text="{x:Bind Name}" />
+						<TextBlock Text="{x:Bind Content}" />
 					</StackPanel>
 				</DataTemplate>
 			</ComboBox.ItemTemplate>
 		</ComboBox>
 
-		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="{x:Bind ViewModel.StartLabel}" />
-			<TextBlock Text="{x:Bind ViewModel.PauseLabel}" />
-			<TextBlock Text="{x:Bind ViewModel.FinishLabel}" />
-		</StackPanel>
+		<Grid
+			Margin="5,5,5,5"
+			Padding="5"
+			ColumnSpacing="5">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+
+			<Border
+				Grid.Column="0"
+				BorderBrush="Black"
+				BorderThickness="1">
+				<TextBlock Height="30" Text="{x:Bind ViewModel.StartLabel}" />
+			</Border>
+			<Border
+				Grid.Column="1"
+				BorderBrush="Black"
+				BorderThickness="1">
+				<TextBlock Height="30" Text="{x:Bind ViewModel.PauseLabel}" />
+			</Border>
+			<Border
+				Grid.Column="2"
+				BorderBrush="Black"
+				BorderThickness="1">
+				<TextBlock Height="30" Text="{x:Bind ViewModel.FinishLabel}" />
+			</Border>
+		</Grid>
 
 		<TextBox
-			Width="80"
-			Height="20"
+			Width="130"
+			Height="100"
+			Margin="0,5,0,5"
 			AcceptsReturn="True"
 			Header="{x:Bind ViewModel.MemoLabel}"
 			TextWrapping="Wrap" />
 
-		<TextBox Width="80" Height="5" />
+		<TextBox Width="130" Height="40" />
 
-
-		<StackPanel Orientation="Horizontal">
-			<Button Click="{x:Bind ViewModel.ShowHashList}" Content="{x:Bind ViewModel.HashButtonLabel}" />
-			<Button Click="{x:Bind ViewModel.MemoRegister}" Content="{x:Bind ViewModel.RegisterButtonLabel}" />
+		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+			<Button
+				Height="35"
+				Margin="0,5,5,5"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				Click="{x:Bind ViewModel.ShowHashList}"
+				Content="{x:Bind ViewModel.HashButtonLabel}" />
+			<Button
+				Height="35"
+				Margin="0,5,5,5"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				Click="{x:Bind ViewModel.MemoRegister}"
+				Content="{x:Bind ViewModel.RegisterButtonLabel}" />
 		</StackPanel>
-
-
-
 	</StackPanel>
 </Page>

@@ -1,0 +1,34 @@
+﻿<Page
+	x:Class="MemoApp.Views.RegisterTaskPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="using:MemoApp"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:viewmodels="using:MemoApp.ViewModels"
+	xmlns:views="using:MemoApp.Views"
+	Width="150"
+	Height="200"
+	Margin="5,10,5,10"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	mc:Ignorable="d">
+
+	<StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+
+		<TextBlock Text="{x:Bind ViewModel.TitleLabel}" />
+
+		<Button
+			Margin="0,3,1,0"
+			HorizontalAlignment="Right"
+			Click="{x:Bind ViewModel.RegisterTaskData}"
+			Content="{x:Bind ViewModel.RegisterButtonLabel}" />
+
+		<TextBox
+			Width="120"
+			Height="160"
+			AcceptsReturn="True"
+			Text="{x:Bind ViewModel.TaskData}"
+			TextWrapping="Wrap" />
+
+	</StackPanel>
+</Page>
