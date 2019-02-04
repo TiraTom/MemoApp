@@ -29,8 +29,8 @@ namespace MempApp.Model
 	public class Memo
 	{
 		public string MemoId { get; set; }
-		public DateTime CreateTime { get; set; }
-		public DateTime UpdateTime { get; set; }
+		public DateTimeOffset CreateTime { get; set; }
+		public DateTimeOffset UpdateTime { get; set; }
 		public string Content { get; set; }
 		public virtual EachTask EachTask { get; set; }
 
@@ -39,23 +39,23 @@ namespace MempApp.Model
 	{
 		public string HashItemId { get; set; }
 		public string Name { get; set; } = default;
-		public DateTime UsedTime { get; set; } = default;
+		public DateTimeOffset UsedTime { get; set; } = default;
 	}
 	public class EachTask
 	{
 		public string EachTaskId { get; set; }
 		public string Content { get; set; } = default;
-		public DateTime DeadLine { get; set; } = default;
-		public DateTime PlanDate { get; set; } = default;
-		public DateTime RegisteredDate { get; set; } = default;
+		public DateTimeOffset DeadLine { get; set; } = default;
+		public DateTimeOffset PlanDate { get; set; } = default;
+		public DateTimeOffset RegisteredDate { get; set; } = default;
 		public string Type { get; set; } = default;
 	}
 
 	public class TimeInfo
 	{
 		public string TimeInfoId { get; set; }
-		public DateTime Start { get; set; }
-		public DateTime Stop { get; set; }
+		public DateTimeOffset Start { get; set; }
+		public DateTimeOffset Stop { get; set; }
 		public virtual EachTask EachTask { get; set; }
 	}
 }

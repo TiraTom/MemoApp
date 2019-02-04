@@ -7,28 +7,45 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:viewmodels="using:MemoApp.ViewModels"
 	xmlns:views="using:MemoApp.Views"
-	Width="150"
-	Height="200"
+	Width="500"
+	Height="700"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
 
-	<StackPanel HorizontalAlignment="Center" Orientation="Vertical">
+	<StackPanel
+		Width="450"
+		HorizontalAlignment="Center"
+		Orientation="Vertical">
+
+		<Button
+			HorizontalAlignment="Right"
+			Click="{x:Bind MoveToMainPage}"
+			Content="{x:Bind ViewModel.MainPageButtonLabel}"
+			FontSize="12" />
 
 		<TextBlock Text="{x:Bind ViewModel.TitleLabel}" />
 
-		<Button
-			Margin="0,3,1,0"
-			HorizontalAlignment="Right"
-			Click="{x:Bind ViewModel.RegisterTaskData}"
-			Content="{x:Bind ViewModel.RegisterButtonLabel}" />
+		<CalendarDatePicker
+			Margin="0,3,0,10"
+			Date="{x:Bind ViewModel.PlanDate, Mode=TwoWay}"
+			Header="Date of Task" />
+
 
 		<TextBox
-			Width="120"
-			Height="160"
+			Width="450"
+			Height="300"
 			AcceptsReturn="True"
-			Text="{x:Bind ViewModel.TaskData}"
+			PlaceholderText="{x:Bind ViewModel.TaskDataPlaceHolder}"
+			Text="{x:Bind ViewModel.TaskData, Mode=TwoWay}"
 			TextWrapping="Wrap" />
+
+		<Button
+			Margin="0,5,5,5"
+			HorizontalAlignment="Right"
+			Click="{x:Bind ViewModel.RegisterTaskData}"
+			Content="{x:Bind ViewModel.RegisterButtonLabel}"
+			FontSize="12" />
 
 	</StackPanel>
 </Page>

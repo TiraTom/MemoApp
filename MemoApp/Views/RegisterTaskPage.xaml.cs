@@ -29,5 +29,10 @@ namespace MemoApp.Views
 			this.InitializeComponent();
 			ViewModel.Initialize(this);
 		}
+
+		public void MoveToMainPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(MainPage));
+		}
 	}
 }

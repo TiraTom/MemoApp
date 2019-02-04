@@ -29,6 +29,12 @@ namespace MemoApp.Views
             this.InitializeComponent();
 			ViewModel.Initialize(this);
 			this.DataContext = ViewModel;
-        }
-    }
+		}
+
+		public void MoveToRegisterTaskPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(RegisterTaskPage));
+		}
+
+	}
 }

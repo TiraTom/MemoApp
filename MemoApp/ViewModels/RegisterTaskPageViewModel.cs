@@ -14,8 +14,11 @@ namespace MemoApp.ViewModels
 	{
 		public Views.RegisterTaskPage View { get; private set; } = null;
 		public string TitleLabel { get; set; } = "本日のタスク";
-		public string RegisterButtonLabel { get; set; } = "Register";
+		public string RegisterButtonLabel { get; set; } = "登録";
 		public string TaskData { get; set; } = default;
+		public string MainPageButtonLabel { get; set; } = "戻る";
+		public string TaskDataPlaceHolder { get; set; } = "タスク入力欄\n\n「#」から始まる行は中タスク、「-」で始まる行は中タスクに属する小タスクとして認識されます。\n\n入力例）\n#カップラーメンを作る\n-ふたを開ける\n-お湯を注ぐ\n-３分待つ\n";
+		public DateTimeOffset PlanDate {get; set;} = DateTimeOffset.Now ;
 
 		public void Initialize(Views.RegisterTaskPage registerTaskPage)
 		{
@@ -34,18 +37,25 @@ namespace MemoApp.ViewModels
 
 				string classificationTask = taskStrings[0];
 
+				EachTask newClassificationTask = new EachTask()
+				{
+					PlanDate = this.PlanDate,
+					Content = classificationTask,
+					RegisteredDate = DateTime.Now,
+
+				};
+				EachTaskModel eachTaskModel = new EachTaskModel();
+				await eachTaskModel.RegisterTask(newClassificationTask);
+
 				foreach (string eachTaskString in taskStrings.GetRange(1, taskStrings.Count - 1))
 				{
 					EachTask newTask = new EachTask()
 					{
 						Content = eachTaskString,
-						RegisteredDate = DateTime.Now
+						RegisteredDate = DateTimeOffset.Now
 					};
-
-					EachTaskModel eachTaskModel = new EachTaskModel();
 					await eachTaskModel.RegisterTask(newTask);
 				}
-
 			}
 		}
 	}

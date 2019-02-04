@@ -26,6 +26,7 @@ namespace MemoApp.ViewModels
 		}
 
 		public string TaskChoiceLabel { get; set; } = "タスク選択";
+		public string TaskChoicePlaceholder { get; set; } = "タスクを選択してください";
 		public string StartLabel { get; set; } = "START";
 		public string PauseLabel { get; set; } = "PAUSE";
 		public string FinishLabel { get; set; } = "FINISH";
@@ -35,6 +36,7 @@ namespace MemoApp.ViewModels
 		public List<EachTask> TaskListData { get; set; } = default;
 		public List<HashItem> HashItemListData { get; set; } = default;
 		public List<Memo> MemoListData { get; set; } = default;
+		public string RegisterPageButtonLabel { get; set; } = "タスク\n登録";
 
 		public void ShowHashList(object sender, RoutedEventArgs e)
 		{
