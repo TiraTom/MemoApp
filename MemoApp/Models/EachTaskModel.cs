@@ -21,14 +21,13 @@ namespace MemoApp.Models
 
 
 
-		async public Task RegisterTask(EachTask newTask)
+		async public Task<int> RegisterTask(EachTask newTask)
 		{
 			using (var db = new MemoAppContext())
 			{
 
 				db.EachTasks.Add(newTask);
-				await db.SaveChangesAsync();
-
+				return await db.SaveChangesAsync();
 			}
 		}
 	}

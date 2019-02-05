@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,6 +28,7 @@ namespace MemoApp.Views
         public MainPage()
         {
             this.InitializeComponent();
+			ApplicationView.PreferredLaunchViewSize = new Size(500, 600);
 			ViewModel.Initialize(this);
 			this.DataContext = ViewModel;
 		}

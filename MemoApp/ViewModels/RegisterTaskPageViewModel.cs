@@ -27,13 +27,20 @@ namespace MemoApp.ViewModels
 
 		async public void RegisterTaskData(object sender, RoutedEventArgs e)
 		{
-			TaskData = "\n" + TaskData;
+			TaskData = "\r" + TaskData;
 
-			string[] largeTaskStrings = TaskData.Split("\n#");
+			TaskData = TaskData.Replace("\r\r", "\r");
+
+			string[] largeTaskStrings = TaskData.Split("\r#");
 
 			foreach (string eachLargeTask in largeTaskStrings)
 			{
-				List<string> taskStrings = TaskData.Split("\n-").ToList();
+				if (string.IsNullOrWhiteSpace(eachLargeTask))
+				{
+					continue;
+				}
+
+				List<string> taskStrings = eachLargeTask.Split("\r-").ToList();
 
 				string classificationTask = taskStrings[0];
 
@@ -45,14 +52,16 @@ namespace MemoApp.ViewModels
 
 				};
 				EachTaskModel eachTaskModel = new EachTaskModel();
-				await eachTaskModel.RegisterTask(newClassificationTask);
+				int classificationId = await eachTaskModel.RegisterTask(newClassificationTask);
+
 
 				foreach (string eachTaskString in taskStrings.GetRange(1, taskStrings.Count - 1))
 				{
 					EachTask newTask = new EachTask()
 					{
-						Content = eachTaskString,
-						RegisteredDate = DateTimeOffset.Now
+						Content = eachTaskString.Substring(2),
+						RegisteredDate = DateTimeOffset.Now,
+						ParentEachTaskId = classificationId.ToString()
 					};
 					await eachTaskModel.RegisterTask(newTask);
 				}

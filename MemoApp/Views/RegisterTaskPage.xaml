@@ -7,8 +7,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:viewmodels="using:MemoApp.ViewModels"
 	xmlns:views="using:MemoApp.Views"
-	Width="500"
-	Height="700"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">

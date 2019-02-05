@@ -8,8 +8,6 @@
 	xmlns:model="using:MempApp.Model"
 	xmlns:viewmodels="using:MemoApp.ViewModels"
 	xmlns:views="using:MemoApp.Views"
-	Width="500"
-	Height="700"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="ViewModel.Page_Loaded"
