@@ -25,17 +25,12 @@
 			Margin="5,5,5,5"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Top"
+			DisplayMemberPath="Content"
 			Header="{x:Bind ViewModel.TaskChoiceLabel}"
-			ItemsSource="{x:Bind ViewModel.TaskListData}"
-			PlaceholderText="{x:Bind ViewModel.TaskChoicePlaceholder}">
-			<ComboBox.ItemTemplate>
-				<DataTemplate x:DataType="model:EachTask">
-					<StackPanel>
-						<TextBlock Text="{x:Bind Content, Mode=TwoWay}" />
-					</StackPanel>
-				</DataTemplate>
-			</ComboBox.ItemTemplate>
-		</ComboBox>
+			ItemsSource="{x:Bind ViewModel.TaskListData, Mode=OneWay}"
+			PlaceholderText="{x:Bind ViewModel.TaskChoicePlaceholder}"
+			SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=OneWay}"
+			SelectedValuePath="EachTaskId" />
 
 		<Grid
 			Margin="5,5,5,5"
@@ -56,6 +51,7 @@
 					Height="30"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
+					Click="{x:Bind ViewModel.TaskStart}"
 					Content="{x:Bind ViewModel.StartLabel}"
 					FontSize="11" />
 			</Border>
@@ -89,23 +85,14 @@
 			Margin="0,5,0,5"
 			AcceptsReturn="True"
 			Header="{x:Bind ViewModel.MemoLabel, Mode=TwoWay}"
+			PlaceholderText="{x:Bind ViewModel.MemoLabel, Mode=TwoWay}"
 			TextWrapping="Wrap" />
-
-		<!--<TextBox Width="200" Height="32" />-->
 
 		<StackPanel
 			Height="40"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Stretch"
 			Orientation="Horizontal">
-			<!--<Button
-				Width="20"
-				Margin="0,5,5,5"
-				HorizontalAlignment="Left"
-				VerticalAlignment="Stretch"
-				Click="{x:Bind ViewModel.ShowHashList}"
-				Content="x:Bind ViewModel.HashButtonLabel}"
-				FontSize="7" />-->
 			<Button
 				Width="50"
 				Margin="0,5,5,5"

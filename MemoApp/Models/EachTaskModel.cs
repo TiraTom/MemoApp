@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace MemoApp.Models
 {
-	public class EachTaskModel
+	public static class EachTaskModel
 	{
-		public bool IsOver(EachTask eachTask)
-		{
-			return eachTask.DeadLine.CompareTo(DateTime.Now) == 0 ? false : true;
-		}
 
 		public enum TaskType
 		{
@@ -21,13 +17,30 @@ namespace MemoApp.Models
 
 
 
-		async public Task<int> RegisterTask(EachTask newTask)
+		async public static Task<int> RegisterTaskAsync(EachTask newTask)
 		{
 			using (var db = new MemoAppContext())
 			{
 
 				db.EachTasks.Add(newTask);
 				return await db.SaveChangesAsync();
+			}
+		}
+
+		public static int RegisterTask(EachTask newTask)
+		{
+			using (var db = new MemoAppContext())
+			{
+				db.EachTasks.Add(newTask);
+				return db.SaveChanges();
+			}
+		}
+
+		public static List<EachTask> GetSpecificDateEachTasks(DateTime specificDate)
+		{
+			using (var db = new MemoAppContext())
+			{
+				return db.EachTasks.ToList().FindAll(eachTask => eachTask.PlanDate.Date == specificDate);
 			}
 		}
 	}

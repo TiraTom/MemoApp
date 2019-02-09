@@ -51,19 +51,19 @@ namespace MemoApp.ViewModels
 					RegisteredDate = DateTime.Now,
 
 				};
-				EachTaskModel eachTaskModel = new EachTaskModel();
-				int classificationId = await eachTaskModel.RegisterTask(newClassificationTask);
+
+				int classificationId = EachTaskModel.RegisterTask(newClassificationTask);
 
 
 				foreach (string eachTaskString in taskStrings.GetRange(1, taskStrings.Count - 1))
 				{
 					EachTask newTask = new EachTask()
 					{
-						Content = eachTaskString.Substring(2),
+						Content = eachTaskString.Substring(1),
 						RegisteredDate = DateTimeOffset.Now,
 						ParentEachTaskId = classificationId.ToString()
 					};
-					await eachTaskModel.RegisterTask(newTask);
+					await EachTaskModel.RegisterTaskAsync(newTask);
 				}
 			}
 		}

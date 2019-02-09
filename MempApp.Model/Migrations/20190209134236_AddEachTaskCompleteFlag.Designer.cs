@@ -3,14 +3,16 @@ using System;
 using MempApp.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MempApp.Model.Migrations
 {
     [DbContext(typeof(MemoAppContext))]
-    partial class MemoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20190209134236_AddEachTaskCompleteFlag")]
+    partial class AddEachTaskCompleteFlag
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,6 +40,20 @@ namespace MempApp.Model.Migrations
                     b.HasKey("EachTaskId");
 
                     b.ToTable("EachTasks");
+                });
+
+            modelBuilder.Entity("MempApp.Model.HashItem", b =>
+                {
+                    b.Property<string>("HashItemId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<DateTimeOffset>("UsedTime");
+
+                    b.HasKey("HashItemId");
+
+                    b.ToTable("HashItems");
                 });
 
             modelBuilder.Entity("MempApp.Model.Memo", b =>

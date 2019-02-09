@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,7 +26,7 @@ namespace MemoApp.Views
     {
 		public ViewModels.MainPageViewModel ViewModel { get; private set; } = new ViewModels.MainPageViewModel();
 
-        public MainPage()
+		public MainPage()
         {
             this.InitializeComponent();
 			ApplicationView.PreferredLaunchViewSize = new Size(500, 600);
