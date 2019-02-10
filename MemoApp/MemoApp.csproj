@@ -125,6 +125,10 @@
     <Compile Include="Helpers\PageTokens.cs" />
     <Compile Include="Models\EachTaskModel.cs" />
     <Compile Include="Models\TimeInfoModel.cs" />
+    <Compile Include="ViewModels\LogPageViewModel.cs" />
+    <Compile Include="Views\LogPage.xaml.cs">
+      <DependentUpon>LogPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RegisterTaskPage.xaml.cs">
       <DependentUpon>RegisterTaskPage.xaml</DependentUpon>
     </Compile>
@@ -157,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\LogPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RegisterTaskPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

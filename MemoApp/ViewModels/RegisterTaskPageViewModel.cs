@@ -16,7 +16,7 @@ namespace MemoApp.ViewModels
 		public string TitleLabel { get; set; } = "本日のタスク";
 		public string RegisterButtonLabel { get; set; } = "登録";
 		public string TaskData { get; set; } = default;
-		public string MainPageButtonLabel { get; set; } = "戻る";
+		public string MainPageButtonLabel { get; set; } = "行動\nログ";
 		public string TaskDataPlaceHolder { get; set; } = "タスク入力欄\n\n「#」から始まる行は中タスク、「-」で始まる行は中タスクに属する小タスクとして認識されます。\n\n入力例）\n#カップラーメンを作る\n-ふたを開ける\n-お湯を注ぐ\n-３分待つ\n";
 		public DateTimeOffset PlanDate {get; set;} = DateTimeOffset.Now ;
 

@@ -1,12 +1,9 @@
 ﻿<Page
-	x:Class="MemoApp.Views.RegisterTaskPage"
+	x:Class="MemoApp.Views.LogPage"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:MemoApp"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:viewmodels="using:MemoApp.ViewModels"
-	xmlns:views="using:MemoApp.Views"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	mc:Ignorable="d">
@@ -18,7 +15,7 @@
 
 		<Button
 			HorizontalAlignment="Right"
-			Click="{x:Bind MoveToLogPage}"
+			Click="{x:Bind MoveToMainPage}"
 			Content="{x:Bind ViewModel.MainPageButtonLabel}"
 			FontSize="12" />
 
@@ -26,24 +23,9 @@
 
 		<CalendarDatePicker
 			Margin="0,3,0,10"
-			Date="{x:Bind ViewModel.PlanDate, Mode=TwoWay}"
+			Date="{x:Bind ViewModel.LogDate, Mode=TwoWay}"
 			Header="Date of Task" />
 
-
-		<TextBox
-			Width="450"
-			Height="300"
-			AcceptsReturn="True"
-			PlaceholderText="{x:Bind ViewModel.TaskDataPlaceHolder}"
-			Text="{x:Bind ViewModel.TaskData, Mode=TwoWay}"
-			TextWrapping="Wrap" />
-
-		<Button
-			Margin="0,5,5,5"
-			HorizontalAlignment="Right"
-			Click="{x:Bind ViewModel.RegisterTaskData}"
-			Content="{x:Bind ViewModel.RegisterButtonLabel}"
-			FontSize="12" />
-
 	</StackPanel>
+
 </Page>

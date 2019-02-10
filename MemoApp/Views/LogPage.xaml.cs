@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,20 +20,19 @@ namespace MemoApp.Views
 	/// <summary>
 	/// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
 	/// </summary>
-	public sealed partial class RegisterTaskPage : Page
+	public sealed partial class LogPage : Page
 	{
-		public ViewModels.RegisterTaskPageViewModel ViewModel { get; private set; } = new ViewModels.RegisterTaskPageViewModel();
+		public ViewModels.LogPageViewModel ViewModel { get; private set; } = new ViewModels.LogPageViewModel();
 
-		public RegisterTaskPage()
+		public LogPage()
 		{
 			this.InitializeComponent();
-			ApplicationView.PreferredLaunchViewSize = new Size(500, 600);
-			ViewModel.Initialize(this);
 		}
 
-		public void MoveToLogPage(object sender, RoutedEventArgs e)
+		public void MoveToMainPage(object sender, RoutedEventArgs e)
 		{
-			Frame.Navigate(typeof(LogPage));
+			Frame.Navigate(typeof(MainPage));
 		}
+
 	}
 }
