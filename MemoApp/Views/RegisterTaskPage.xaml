@@ -27,7 +27,7 @@
 		<CalendarDatePicker
 			Margin="0,3,0,10"
 			Date="{x:Bind ViewModel.PlanDate, Mode=TwoWay}"
-			Header="Date of Task" />
+			Header="{x:Bind ViewModel.CalenderHeader}" />
 
 
 		<TextBox

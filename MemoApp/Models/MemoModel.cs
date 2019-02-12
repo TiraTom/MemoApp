@@ -1,0 +1,47 @@
+﻿using MempApp.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MemoApp.Models
+{
+	public static class MemoModel
+	{
+		public static void Register(string eachTaskId, string memoContent)
+		{
+			using (var db = new MemoAppContext())
+			{
+				EachTask targetTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
+
+				if (targetTask == null)
+				{
+					return;
+				}
+
+				Memo sameMemo = db.Memos.Where(memo => memo.EachTask.EachTaskId == eachTaskId).FirstOrDefault();
+
+				if (sameMemo == null)
+				{
+					Memo newMemo = new Memo
+					{
+						CreateTime = DateTime.Now,
+						Content = memoContent,
+						EachTask = targetTask
+					};
+
+					db.Memos.Add(newMemo);
+				}
+				else
+				{
+					sameMemo.Content = memoContent;
+					sameMemo.UpdateTime = DateTimeOffset.Now;
+				}
+
+				db.SaveChanges();
+
+			}
+		}
+	}
+}

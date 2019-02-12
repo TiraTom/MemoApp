@@ -10,7 +10,7 @@ namespace MemoApp.ViewModels
 	{
 		public string MainPageButtonLabel = "Mainに\n戻る";
 		public string TitleLabel = "行動ログ";
-		public DateTimeOffset LogDate { get; set; }
+		public DateTimeOffset LogDate { get; set; } = DateTimeOffset.Now.Date;
 
 	}
 }

@@ -23,8 +23,7 @@
 
 		<CalendarDatePicker
 			Margin="0,3,0,10"
-			Date="{x:Bind ViewModel.LogDate, Mode=TwoWay}"
-			Header="Date of Task" />
+			Date="{x:Bind ViewModel.LogDate, Mode=TwoWay}"/>
 
 	</StackPanel>
 

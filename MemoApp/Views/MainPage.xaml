@@ -3,11 +3,7 @@
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:local="using:MemoApp"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:model="using:MempApp.Model"
-	xmlns:viewmodels="using:MemoApp.ViewModels"
-	xmlns:views="using:MemoApp.Views"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	Loaded="ViewModel.Page_Loaded"
@@ -29,7 +25,7 @@
 			Header="{x:Bind ViewModel.TaskChoiceLabel}"
 			ItemsSource="{x:Bind ViewModel.TaskListData, Mode=OneWay}"
 			PlaceholderText="{x:Bind ViewModel.TaskChoicePlaceholder}"
-			SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=OneWay}"
+			SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=TwoWay}"
 			SelectedValuePath="EachTaskId" />
 
 		<Grid
@@ -63,6 +59,7 @@
 					Height="30"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
+					Click="{x:Bind ViewModel.TaskPause}"
 					Content="{x:Bind ViewModel.PauseLabel}"
 					FontSize="11" />
 			</Border>
@@ -74,6 +71,7 @@
 					Height="30"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Stretch"
+					Click="{x:Bind ViewModel.TaskStop}"
 					Content="{x:Bind ViewModel.FinishLabel}"
 					FontSize="11" />
 			</Border>
@@ -84,8 +82,9 @@
 			Height="200"
 			Margin="0,5,0,5"
 			AcceptsReturn="True"
-			Header="{x:Bind ViewModel.MemoLabel, Mode=TwoWay}"
-			PlaceholderText="{x:Bind ViewModel.MemoLabel, Mode=TwoWay}"
+			Header="{x:Bind ViewModel.MemoLabel}"
+			PlaceholderText="{x:Bind ViewModel.MemoLabel}"
+			Text="{x:Bind ViewModel.MemoContent, Mode=TwoWay}"
 			TextWrapping="Wrap" />
 
 		<StackPanel

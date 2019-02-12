@@ -124,6 +124,7 @@
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\PageTokens.cs" />
     <Compile Include="Models\EachTaskModel.cs" />
+    <Compile Include="Models\MemoModel.cs" />
     <Compile Include="Models\TimeInfoModel.cs" />
     <Compile Include="ViewModels\LogPageViewModel.cs" />
     <Compile Include="Views\LogPage.xaml.cs">

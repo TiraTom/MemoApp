@@ -19,7 +19,6 @@ namespace MemoApp.ViewModels
 			View = mainPage;
 		}
 
-
 		public string TaskChoiceLabel { get; set; } = "タスク選択";
 		public string TaskChoicePlaceholder { get; set; } = "タスクを選択してください";
 		public string StartLabel { get; set; } = "START";
@@ -32,28 +31,19 @@ namespace MemoApp.ViewModels
 		public List<Memo> MemoListData { get; set; } = default;
 		public string RegisterPageButtonLabel { get; set; } = "タスク\n登録";
 		public string SelectedEachTaskId { get; set; }
-
+		public string MemoContent { get; set; } = default;
 
 
 		public void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+
 		}
 
 		public void MemoRegister(object sender, RoutedEventArgs e)
 		{
-			using (var db = new MemoAppContext())
+			if (!string.IsNullOrWhiteSpace(MemoContent))
 			{
-				Memo newMemo = new Memo
-				{
-					CreateTime = DateTime.Now,
-					Content = MemoLabel
-				};
-
-				db.Memos.Add(newMemo);
-				db.SaveChanges();
-
-				MemoListData = db.Memos.ToList();
-
+				MemoModel.Register(SelectedEachTaskId, MemoContent);
 			}
 		}
 

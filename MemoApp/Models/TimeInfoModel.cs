@@ -36,8 +36,18 @@ namespace MemoApp.Models
 		{
 			using (var db = new MemoAppContext())
 			{
-				TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId).FirstOrDefault();
-				stopTimeInfo.Stop = DateTimeOffset.Now;
+				TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
+
+				if (stopTimeInfo == null)
+				{
+					// すでに終わったタスクについて終了を押したパターン
+					// 始めてないのに終わらしちゃったパターン
+					// なんかメッセージ出したい
+				}
+				else
+				{
+					stopTimeInfo.Stop = DateTimeOffset.Now;
+				}
 
 				db.SaveChanges();
 			}
@@ -45,10 +55,21 @@ namespace MemoApp.Models
 
 		public static void RegisterStop(string eachTaskId)
 		{
-			RegisterPause(eachTaskId);
-
 			using (var db = new MemoAppContext())
 			{
+				TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
+
+				if (stopTimeInfo == null)
+				{
+					// 一時停止のまま終了を押したパターン
+					// 始めてないのに終わらしちゃったパターン
+					// なんかメッセージ出したい
+				}
+				else
+				{
+					RegisterPause(eachTaskId);
+				}
+
 				EachTask completeTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
 				completeTask.CompleteFlag = true;
 
