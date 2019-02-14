@@ -121,6 +121,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ModelHelpers.cs" />
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\PageTokens.cs" />
     <Compile Include="Models\EachTaskModel.cs" />

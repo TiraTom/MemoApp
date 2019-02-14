@@ -14,6 +14,14 @@ namespace MemoApp.Models
 			return (timeInfo.Start != null && timeInfo.Stop != null) ? timeInfo.Stop.Subtract(timeInfo.Start) : new TimeSpan(0);
 		}
 
+		public static List<TimeInfo> GetSpecifigTaskTimeInfo(string eachTaskId)
+		{
+			using (var db = new MemoAppContext())
+			{
+				return db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId).ToList();
+			}
+		}
+
 		public static void RegisterStart(string eachTaskId)
 		{
 			using (var db = new MemoAppContext())

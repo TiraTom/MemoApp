@@ -43,5 +43,16 @@ namespace MemoApp.Models
 
 			}
 		}
+
+		public static List<Memo> GetSpecificDateMemo(DateTimeOffset specificDate)
+		{
+			using(var db = new MemoAppContext())
+			{
+				// MemoのEachTaskが取得できてない
+				List<Memo> memoList = db.Memos.ToList().FindAll(memo => memo.CreateTime.Date == specificDate.Date).ToList();
+
+				return memoList;
+			}
+		}
 	}
 }
