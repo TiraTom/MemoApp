@@ -35,70 +35,112 @@
 			SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=TwoWay}"
 			SelectedValuePath="EachTaskId" />
 
-		<ListView
-			x:Name="ActivityLogArea"
-			Width="450"
-			HorizontalAlignment="Stretch"
-			ItemsSource="{x:Bind ViewModel.ActivityLog, Mode=OneWay}">
-			<ListView.ItemTemplate>
-				<DataTemplate x:Name="ActivityLogTemplate" x:DataType="data:Activity">
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="2*" />
-							<ColumnDefinition Width="1*" />
-							<ColumnDefinition Width="2*" />
-							<ColumnDefinition Width="3*" />
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="14" />
-						</Grid.RowDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
 
-						<TextBlock
-							Grid.Row="0"
-							Grid.Column="0"
-							FontSize="12"
-							Text="{x:Bind StartTime}" />
-						<TextBlock
-							Grid.Row="0"
-							Grid.Column="1"
-							FontSize="10"
-							Text=" - " />
-						<TextBlock
-							Grid.Row="0"
-							Grid.Column="2"
-							FontSize="12"
-							Text="{x:Bind StopTime}" />
-						<TextBlock
-							Grid.Row="0"
-							Grid.Column="3"
-							FontSize="12"
-							Text="{x:Bind TaskContent}" />
-					</Grid>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
-		<ListView x:Name="MemoList" ItemsSource="{x:Bind ViewModel.NoteList, Mode=OneWay}">
-			<ListView.ItemTemplate>
-				<DataTemplate x:Name="NoteTemplate" x:DataType="data:Note">
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="4*" />
-						</Grid.RowDefinitions>
+			<Border
+				Grid.Column="0"
+				Margin="0,0,1,2"
+				BorderBrush="LightGray"
+				BorderThickness="2">
+				<ScrollViewer>
+					<ListView
+						x:Name="ActivityLogArea"
+						Height="300"
+						HorizontalAlignment="Stretch"
+						ItemsSource="{x:Bind ViewModel.ActivityLog, Mode=OneWay}">
+						<ListView.ItemTemplate>
+							<DataTemplate x:Name="ActivityLogTemplate" x:DataType="data:Activity">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="15" />
+										<RowDefinition Height="15" />
+									</Grid.RowDefinitions>
 
-						<TextBlock
-							Grid.Row="1"
-							Grid.Column="1"
-							FontSize="10"
-							Text="{x:Bind TaskContent}" />
-						<TextBlock
-							Grid.Row="0"
-							Grid.Column="1"
-							FontSize="15"
-							Text="{x:Bind Memo}" />
-					</Grid>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
+									<RelativePanel Grid.Row="0">
+
+										<TextBlock
+											x:Name="prefix"
+											Grid.Row="0"
+											HorizontalAlignment="Right"
+											FontSize="12"
+											Text="[" />
+										<TextBlock
+											x:Name="Start"
+											Grid.Row="0"
+											HorizontalAlignment="Center"
+											FontSize="12"
+											RelativePanel.RightOf="prefix"
+											Text="{x:Bind StartTime}" />
+										<TextBlock
+											x:Name="hyphen"
+											Grid.Row="0"
+											HorizontalAlignment="Center"
+											FontSize="10"
+											RelativePanel.RightOf="Start"
+											Text=" - " />
+										<TextBlock
+											x:Name="Stop"
+											Grid.Row="0"
+											HorizontalAlignment="Center"
+											FontSize="12"
+											RelativePanel.RightOf="hyphen"
+											Text="{x:Bind StopTime}" />
+										<TextBlock
+											x:Name="Postfix"
+											Grid.Row="0"
+											HorizontalAlignment="Left"
+											FontSize="12"
+											RelativePanel.RightOf="Stop"
+											Text="]" />
+									</RelativePanel>
+									<TextBlock
+										Grid.Row="1"
+										FontSize="12"
+										Text="{x:Bind TaskContent}" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+				</ScrollViewer>
+			</Border>
+			<Border
+				Grid.Column="1"
+				Margin="2,0,0,2"
+				BorderBrush="LightGray"
+				BorderThickness="2">
+				<ScrollViewer>
+					<ListView
+						x:Name="MemoList"
+						Height="300"
+						HorizontalAlignment="Stretch"
+						ItemsSource="{x:Bind ViewModel.NoteList, Mode=OneWay}">
+						<ListView.ItemTemplate>
+							<DataTemplate x:Name="NoteTemplate" x:DataType="data:Note">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="*" />
+										<RowDefinition Height="4*" />
+									</Grid.RowDefinitions>
+
+									<TextBlock
+										Grid.Row="0"
+										FontSize="14"
+										Text="{x:Bind TaskContent}" />
+									<TextBlock
+										Grid.Row="1"
+										FontSize="10"
+										Text="{x:Bind Memo}" />
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
+				</ScrollViewer>
+			</Border>
+		</Grid>
+
 	</StackPanel>
 </Page>

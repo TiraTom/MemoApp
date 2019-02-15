@@ -1,4 +1,5 @@
 ﻿using MempApp.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,8 +49,7 @@ namespace MemoApp.Models
 		{
 			using(var db = new MemoAppContext())
 			{
-				// MemoのEachTaskが取得できてない
-				List<Memo> memoList = db.Memos.ToList().FindAll(memo => memo.CreateTime.Date == specificDate.Date).ToList();
+				List<Memo> memoList = db.Memos.Where(memo => memo.CreateTime.Date == specificDate.Date).Include(memo => memo.EachTask).ToList();
 
 				return memoList;
 			}

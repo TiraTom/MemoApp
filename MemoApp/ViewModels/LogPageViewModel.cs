@@ -33,11 +33,11 @@ namespace MemoApp.ViewModels
 		{
 			List<Note> noteList = new List<Note>();
 
-			foreach (Memo memo in memoList)
+			foreach (Memo memo in memoList ?? new List<Memo>())
 			{
 				Note note = new Note()
 				{
-					TaskContent = memo.EachTask.Content,
+					TaskContent = memo.EachTask?.Content,
 					Memo = memo.Content
 				};
 				noteList.Add(note);
