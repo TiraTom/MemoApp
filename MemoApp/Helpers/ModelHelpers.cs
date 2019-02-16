@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using static MemoApp.ViewModels.LogPageViewModel;
 
 namespace MemoApp.Helpers
@@ -18,7 +19,7 @@ namespace MemoApp.Helpers
 
 			using (var db = new MemoAppContext())
 			{
-				List<EachTask> eachTaskList = EachTaskModel.GetSpecificDateEachTasks(specificTime.Date);
+				List<EachTask> eachTaskList = EachTaskModel.GetSpecificDateEachTasks(specificTime);
 
 				foreach (var eachTask in eachTaskList)
 				{
@@ -28,8 +29,9 @@ namespace MemoApp.Helpers
 					{
 						Activity activity = new Activity()
 						{
-							StartTime = timeInfo.Start.ToString("hh:mm"),
-							StopTime = timeInfo.Stop.ToString("hh:mm"),
+							ExactStartTime = timeInfo.Start,
+							StartTime = timeInfo.Start.ToString(" HH : mm "),
+							StopTime = timeInfo.Stop == DateTimeOffset.MinValue ? " XX : XX " : timeInfo.Stop.ToString(" HH : mm "),
 							TaskContent = eachTask.Content
 						};
 
@@ -37,7 +39,8 @@ namespace MemoApp.Helpers
 					}
 				}
 			}
-			return activityLog;
+
+			return activityLog.OrderBy(log => log.ExactStartTime).ToList();
 		}
 	}
 }

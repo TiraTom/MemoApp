@@ -4,102 +4,116 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:xamlTemplate="using:MemoApp.Themes"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	Loaded="ViewModel.Page_Loaded"
 	mc:Ignorable="d">
 
 	<StackPanel HorizontalAlignment="Center" Orientation="Vertical">
-		<Button
-			Width="50"
-			HorizontalAlignment="Right"
-			Click="{x:Bind MoveToRegisterTaskPage}"
-			Content="{x:Bind ViewModel.RegisterPageButtonLabel}"
-			FontSize="12" />
-		<ComboBox
-			Width="450"
-			Margin="5,5,5,5"
-			HorizontalAlignment="Stretch"
-			VerticalAlignment="Top"
-			DisplayMemberPath="Content"
-			Header="{x:Bind ViewModel.TaskChoiceLabel}"
-			ItemsSource="{x:Bind ViewModel.TaskListData, Mode=OneWay}"
-			PlaceholderText="{x:Bind ViewModel.TaskChoicePlaceholder}"
-			SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=TwoWay}"
-			SelectedValuePath="EachTaskId" />
-
-		<Grid
-			Margin="5,5,5,5"
-			Padding="5"
-			ColumnSpacing="5">
-
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-
-			<Border
-				Grid.Column="0"
-				BorderBrush="Black"
-				BorderThickness="1">
-				<Button
-					Height="30"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"
-					Click="{x:Bind ViewModel.TaskStart}"
-					Content="{x:Bind ViewModel.StartLabel}"
-					FontSize="11" />
-			</Border>
-			<Border
-				Grid.Column="1"
-				BorderBrush="Black"
-				BorderThickness="1">
-				<Button
-					Height="30"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"
-					Click="{x:Bind ViewModel.TaskPause}"
-					Content="{x:Bind ViewModel.PauseLabel}"
-					FontSize="11" />
-			</Border>
-			<Border
-				Grid.Column="2"
-				BorderBrush="Black"
-				BorderThickness="1">
-				<Button
-					Height="30"
-					HorizontalAlignment="Stretch"
-					VerticalAlignment="Stretch"
-					Click="{x:Bind ViewModel.TaskStop}"
-					Content="{x:Bind ViewModel.FinishLabel}"
-					FontSize="11" />
-			</Border>
-		</Grid>
-
-		<TextBox
-			Width="450"
-			Height="200"
-			Margin="0,5,0,5"
-			AcceptsReturn="True"
-			Header="{x:Bind ViewModel.MemoLabel}"
-			PlaceholderText="{x:Bind ViewModel.MemoLabel}"
-			Text="{x:Bind ViewModel.MemoContent, Mode=TwoWay}"
-			TextWrapping="Wrap" />
-
 		<StackPanel
-			Height="40"
+			x:Name="MenuHeader"
 			HorizontalAlignment="Right"
-			VerticalAlignment="Stretch"
 			Orientation="Horizontal">
-			<Button
-				Width="50"
-				Margin="0,5,5,5"
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Background="DarkGray"
+				Click="{x:Bind MoveMainPage}"
+				Content="{x:Bind Common.MainPageButtonLabel}" />
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Click="{x:Bind MoveRegisterTaskPage}"
+				Content="{x:Bind Common.RegisterPageButtonLabel}" />
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Click="{x:Bind MoveLogPage}"
+				Content="{x:Bind Common.LogPageButtonLabel}" />
+		</StackPanel>
+		<StackPanel>
+			<ComboBox
+				Width="470"
+				Margin="5,5,5,5"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Top"
+				DisplayMemberPath="Content"
+				Header="{x:Bind ViewModel.TaskChoiceLabel}"
+				ItemsSource="{x:Bind ViewModel.TaskListData, Mode=OneWay}"
+				PlaceholderText="{x:Bind ViewModel.TaskChoicePlaceholder}"
+				SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=TwoWay}"
+				SelectedValuePath="EachTaskId" />
+
+			<Grid
+				Margin="5,5,5,5"
+				Padding="5"
+				ColumnSpacing="5">
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Border
+					Grid.Column="0"
+					BorderBrush="Black"
+					BorderThickness="1">
+					<Button
+						Height="30"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						Click="{x:Bind ViewModel.TaskStart}"
+						Content="{x:Bind ViewModel.StartLabel}"
+						FontSize="11" />
+				</Border>
+				<Border
+					Grid.Column="1"
+					BorderBrush="Black"
+					BorderThickness="1">
+					<Button
+						Height="30"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						Click="{x:Bind ViewModel.TaskPause}"
+						Content="{x:Bind ViewModel.PauseLabel}"
+						FontSize="11" />
+				</Border>
+				<Border
+					Grid.Column="2"
+					BorderBrush="Black"
+					BorderThickness="1">
+					<Button
+						Height="30"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						Click="{x:Bind ViewModel.TaskStop}"
+						Content="{x:Bind ViewModel.FinishLabel}"
+						FontSize="11" />
+				</Border>
+			</Grid>
+
+			<TextBox
+				Width="450"
+				Height="200"
+				Margin="0,5,0,5"
+				AcceptsReturn="True"
+				Header="{x:Bind ViewModel.MemoLabel}"
+				PlaceholderText="{x:Bind ViewModel.MemoLabel}"
+				Text="{x:Bind ViewModel.MemoContent, Mode=TwoWay}"
+				TextWrapping="Wrap" />
+
+			<StackPanel
+				Height="40"
 				HorizontalAlignment="Right"
 				VerticalAlignment="Stretch"
-				Click="{x:Bind ViewModel.MemoRegister}"
-				Content="{x:Bind ViewModel.RegisterButtonLabel}"
-				FontSize="12" />
+				Orientation="Horizontal">
+				<Button
+					Width="50"
+					Margin="0,5,5,5"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Stretch"
+					Click="{x:Bind ViewModel.MemoRegister}"
+					Content="{x:Bind ViewModel.RegisterButtonLabel}"
+					FontSize="12" />
+			</StackPanel>
 		</StackPanel>
 	</StackPanel>
 </Page>

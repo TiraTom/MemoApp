@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace MemoApp.Models
 {
@@ -36,11 +37,11 @@ namespace MemoApp.Models
 			}
 		}
 
-		public static List<EachTask> GetSpecificDateEachTasks(DateTime specificDate)
+		public static List<EachTask> GetSpecificDateEachTasks(DateTimeOffset specificDate)
 		{
 			using (var db = new MemoAppContext())
 			{
-				return db.EachTasks.ToList().FindAll(eachTask => eachTask.PlanDate.Date == specificDate);
+				return db.EachTasks.ToList().FindAll(eachTask => eachTask.PlanDate.Date == specificDate.Date);
 			}
 		}
 	}

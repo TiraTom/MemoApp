@@ -16,11 +16,24 @@
 		HorizontalAlignment="Center"
 		Orientation="Vertical">
 
-		<Button
+		<StackPanel
+			x:Name="MenuHeader"
 			HorizontalAlignment="Right"
-			Click="{x:Bind MoveToLogPage}"
-			Content="{x:Bind ViewModel.MainPageButtonLabel}"
-			FontSize="12" />
+			Orientation="Horizontal">
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Click="{x:Bind MoveMainPage}"
+				Content="{x:Bind Common.MainPageButtonLabel}" />
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Background="DarkGray"
+				Click="{x:Bind MoveRegisterTaskPage}"
+				Content="{x:Bind Common.RegisterPageButtonLabel}" />
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Click="{x:Bind MoveLogPage}"
+				Content="{x:Bind Common.LogPageButtonLabel}" />
+		</StackPanel>
 
 		<TextBlock Text="{x:Bind ViewModel.TitleLabel}" />
 

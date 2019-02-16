@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace MemoApp.ViewModels
 {
@@ -25,13 +26,12 @@ namespace MemoApp.ViewModels
 		public string PauseLabel { get; set; } = "PAUSE";
 		public string FinishLabel { get; set; } = "FINISH";
 		public string MemoLabel { get; set; } = "メモを残す";
-		public string HashButtonLabel { get; set; } = "ハッシュ";
 		public string RegisterButtonLabel { get; set; } = "登録";
 		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.Date));
 		public List<Memo> MemoListData { get; set; } = default;
-		public string RegisterPageButtonLabel { get; set; } = "タスク\n登録";
 		public string SelectedEachTaskId { get; set; }
 		public string MemoContent { get; set; } = default;
+		public string Msg { get; set; }
 
 
 		public void Page_Loaded(object sender, RoutedEventArgs e)
@@ -49,17 +49,41 @@ namespace MemoApp.ViewModels
 
 		public void TaskStart(object sender, RoutedEventArgs e)
 		{
-			TimeInfoModel.RegisterStart(SelectedEachTaskId);
+			Msg = TimeInfoModel.RegisterStart(SelectedEachTaskId);
+			if (Msg != null)
+			{
+				NotifyTimeInfoCondition(Msg);
+			}
 		}
 
 		public void TaskPause(object sender, RoutedEventArgs e)
 		{
-			TimeInfoModel.RegisterPause(SelectedEachTaskId);
+			Msg = TimeInfoModel.RegisterPause(SelectedEachTaskId);
+			if (Msg != null)
+			{
+				NotifyTimeInfoCondition(Msg);
+			}
 		}
 
 		public void TaskStop(object sender, RoutedEventArgs e)
 		{
-			TimeInfoModel.RegisterStop(SelectedEachTaskId);
+			Msg = TimeInfoModel.RegisterStop(SelectedEachTaskId);
+			if (Msg != null)
+			{
+				NotifyTimeInfoCondition(Msg);
+			}
+		}
+
+		public async void NotifyTimeInfoCondition(string msg)
+		{
+			ContentDialog timeInfoConditionMsg = new ContentDialog
+			{
+				Title = "MemoAppからのお知らせ",
+				Content = msg,
+				CloseButtonText = "OK"
+			};
+
+			ContentDialogResult result = await timeInfoConditionMsg.ShowAsync();
 		}
 	}
 }

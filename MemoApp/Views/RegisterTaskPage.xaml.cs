@@ -24,6 +24,7 @@ namespace MemoApp.Views
 	public sealed partial class RegisterTaskPage : Page
 	{
 		public ViewModels.RegisterTaskPageViewModel ViewModel { get; private set; } = new ViewModels.RegisterTaskPageViewModel();
+		public ViewModels.CommonViewModel Common { get; private set; } = new ViewModels.CommonViewModel();
 
 		public RegisterTaskPage()
 		{
@@ -32,7 +33,17 @@ namespace MemoApp.Views
 			ViewModel.Initialize(this);
 		}
 
-		public void MoveToLogPage(object sender, RoutedEventArgs e)
+		public void MoveMainPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(MainPage));
+		}
+
+		public void MoveRegisterTaskPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(RegisterTaskPage));
+		}
+
+		public void MoveLogPage(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(LogPage));
 		}

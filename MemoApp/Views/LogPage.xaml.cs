@@ -24,15 +24,27 @@ namespace MemoApp.Views
 	public sealed partial class LogPage : Page
 	{
 		public ViewModels.LogPageViewModel ViewModel { get; private set; } = new ViewModels.LogPageViewModel();
+		public ViewModels.CommonViewModel Common { get; private set; } = new ViewModels.CommonViewModel();
 
 		public LogPage()
 		{
 			this.InitializeComponent();
 		}
 
-		public void MoveToMainPage(object sender, RoutedEventArgs e)
+		public void MoveMainPage(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(MainPage));
 		}
+
+		public void MoveRegisterTaskPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(RegisterTaskPage));
+		}
+
+		public void MoveLogPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(LogPage));
+		}
+
 	}
 }

@@ -25,6 +25,7 @@ namespace MemoApp.Views
     public sealed partial class MainPage : Page
     {
 		public ViewModels.MainPageViewModel ViewModel { get; private set; } = new ViewModels.MainPageViewModel();
+		public ViewModels.CommonViewModel Common { get; private set; } = new ViewModels.CommonViewModel();
 
 		public MainPage()
         {
@@ -34,9 +35,19 @@ namespace MemoApp.Views
 			this.DataContext = ViewModel;
 		}
 
-		public void MoveToRegisterTaskPage(object sender, RoutedEventArgs e)
+		public void MoveMainPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(MainPage));
+		}
+
+		public void MoveRegisterTaskPage(object sender, RoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(RegisterTaskPage));
+		}
+
+		public void MoveLogPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(LogPage));
 		}
 
 	}

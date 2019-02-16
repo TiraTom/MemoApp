@@ -127,6 +127,7 @@
     <Compile Include="Models\EachTaskModel.cs" />
     <Compile Include="Models\MemoModel.cs" />
     <Compile Include="Models\TimeInfoModel.cs" />
+    <Compile Include="ViewModels\CommonViewModel.cs" />
     <Compile Include="ViewModels\LogPageViewModel.cs" />
     <Compile Include="Views\LogPage.xaml.cs">
       <DependentUpon>LogPage.xaml</DependentUpon>
@@ -186,6 +187,9 @@
       <Project>{8BAFD948-A9E0-45D9-96B9-4311B5618F5A}</Project>
       <Name>MempApp.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
