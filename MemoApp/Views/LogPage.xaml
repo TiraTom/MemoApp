@@ -59,107 +59,112 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
-			<Border
-				Grid.Column="0"
-				Margin="0,0,1,2"
-				BorderBrush="LightGray"
-				BorderThickness="2">
-				<ScrollViewer>
-					<ListView
-						x:Name="ActivityLogArea"
-						Height="300"
-						HorizontalAlignment="Stretch"
-						ItemsSource="{x:Bind ViewModel.ActivityLog, Mode=OneWay}">
-						<ListView.ItemTemplate>
-							<DataTemplate x:Name="ActivityLogTemplate" x:DataType="data:Activity">
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="15" />
-										<RowDefinition Height="15" />
-									</Grid.RowDefinitions>
+			<StackPanel Grid.Column="0">
+				<TextBlock Text="{x:Bind ViewModel.LogLabel}" />
 
-									<RelativePanel Grid.Row="0">
+				<Border
+					Margin="0,0,1,2"
+					BorderBrush="LightGray"
+					BorderThickness="2">
+					<ScrollViewer>
+						<ListView
+							x:Name="ActivityLogArea"
+							Height="300"
+							HorizontalAlignment="Stretch"
+							ItemsSource="{x:Bind ViewModel.ActivityLog, Mode=OneWay}">
+							<ListView.ItemTemplate>
+								<DataTemplate x:Name="ActivityLogTemplate" x:DataType="data:Activity">
+									<Grid>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="15" />
+											<RowDefinition Height="15" />
+										</Grid.RowDefinitions>
+
+										<RelativePanel Grid.Row="0">
+
+											<TextBlock
+												x:Name="prefix"
+												Grid.Row="0"
+												HorizontalAlignment="Right"
+												FontSize="12"
+												Text="[ " />
+											<TextBlock
+												x:Name="Start"
+												Grid.Row="0"
+												HorizontalAlignment="Center"
+												FontSize="12"
+												RelativePanel.RightOf="prefix"
+												Text="{x:Bind StartTime}" />
+											<TextBlock
+												x:Name="hyphen"
+												Grid.Row="0"
+												HorizontalAlignment="Center"
+												FontSize="10"
+												RelativePanel.RightOf="Start"
+												Text=" - " />
+											<TextBlock
+												x:Name="Stop"
+												Grid.Row="0"
+												HorizontalAlignment="Center"
+												FontSize="12"
+												RelativePanel.RightOf="hyphen"
+												Text="{x:Bind StopTime}" />
+											<TextBlock
+												x:Name="Postfix"
+												Grid.Row="0"
+												HorizontalAlignment="Left"
+												FontSize="12"
+												RelativePanel.RightOf="Stop"
+												Text=" ]" />
+										</RelativePanel>
+										<TextBlock
+											Grid.Row="1"
+											FontSize="12"
+											Text="{x:Bind TaskContent}" />
+									</Grid>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+					</ScrollViewer>
+				</Border>
+			</StackPanel>
+			<StackPanel Grid.Column="1">
+				<TextBlock Text="{x:Bind ViewModel.MemoLabel}" />
+				<Border
+					Margin="2,0,0,2"
+					BorderBrush="LightGray"
+					BorderThickness="2">
+					<ScrollViewer>
+						<ListView
+							x:Name="MemoList"
+							Height="300"
+							HorizontalAlignment="Stretch"
+							ItemsSource="{x:Bind ViewModel.NoteList, Mode=OneWay}">
+							<ListView.ItemTemplate>
+								<DataTemplate x:Name="NoteTemplate" x:DataType="data:Note">
+									<Grid>
+										<Grid.RowDefinitions>
+											<RowDefinition Height="*" />
+											<RowDefinition Height="4*" />
+										</Grid.RowDefinitions>
 
 										<TextBlock
-											x:Name="prefix"
 											Grid.Row="0"
-											HorizontalAlignment="Right"
-											FontSize="12"
-											Text="[ " />
+											Margin="0,1,0,1"
+											FontSize="13"
+											Text="{x:Bind TaskContent}" />
 										<TextBlock
-											x:Name="Start"
-											Grid.Row="0"
-											HorizontalAlignment="Center"
-											FontSize="12"
-											RelativePanel.RightOf="prefix"
-											Text="{x:Bind StartTime}" />
-										<TextBlock
-											x:Name="hyphen"
-											Grid.Row="0"
-											HorizontalAlignment="Center"
-											FontSize="10"
-											RelativePanel.RightOf="Start"
-											Text=" - " />
-										<TextBlock
-											x:Name="Stop"
-											Grid.Row="0"
-											HorizontalAlignment="Center"
-											FontSize="12"
-											RelativePanel.RightOf="hyphen"
-											Text="{x:Bind StopTime}" />
-										<TextBlock
-											x:Name="Postfix"
-											Grid.Row="0"
-											HorizontalAlignment="Left"
-											FontSize="12"
-											RelativePanel.RightOf="Stop"
-											Text=" ]" />
-									</RelativePanel>
-									<TextBlock
-										Grid.Row="1"
-										FontSize="12"
-										Text="{x:Bind TaskContent}" />
-								</Grid>
-							</DataTemplate>
-						</ListView.ItemTemplate>
-					</ListView>
-				</ScrollViewer>
-			</Border>
-			<Border
-				Grid.Column="1"
-				Margin="2,0,0,2"
-				BorderBrush="LightGray"
-				BorderThickness="2">
-				<ScrollViewer>
-					<ListView
-						x:Name="MemoList"
-						Height="300"
-						HorizontalAlignment="Stretch"
-						ItemsSource="{x:Bind ViewModel.NoteList, Mode=OneWay}">
-						<ListView.ItemTemplate>
-							<DataTemplate x:Name="NoteTemplate" x:DataType="data:Note">
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="*" />
-										<RowDefinition Height="4*" />
-									</Grid.RowDefinitions>
-
-									<TextBlock
-										Grid.Row="0"
-										Margin="0,1,0,1"
-										FontSize="13"
-										Text="{x:Bind TaskContent}" />
-									<TextBlock
-										Grid.Row="1"
-										Margin="0,2,0,0"
-										FontSize="11"
-										Text="{x:Bind Memo}" />
-								</Grid>
-							</DataTemplate>
-						</ListView.ItemTemplate>
-					</ListView>
-				</ScrollViewer>
-			</Border>
+											Grid.Row="1"
+											Margin="0,2,0,0"
+											FontSize="11"
+											Text="{x:Bind Memo}" />
+									</Grid>
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+					</ScrollViewer>
+				</Border>
+			</StackPanel>
 		</Grid>
 
 	</StackPanel>

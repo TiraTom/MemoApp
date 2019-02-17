@@ -17,9 +17,9 @@ namespace MemoApp.ViewModels
 {
 	public class LogPageViewModel
 	{
-		public string TitleLabel = "行動ログ";
+		public string TitleLabel { get; } = "行動ログ";
 		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now));
-		public string TaskChoicePlaceholder { get; set; } = "すべてのタスク";
+		public string TaskChoicePlaceholder { get; } = "すべてのタスク";
 		public string SelectedEachTaskId { get; set; }
 		public CalendarDatePicker LogDateCalendarDatePicker { get; set; } = new CalendarDatePicker();
 		public ObservableCollection<Activity> ActivityLog { get; set; } = new ObservableCollection<Activity>(ModelsHelpers.GetSpecificDateActivityLog(DateTimeOffset.Now));
@@ -27,6 +27,8 @@ namespace MemoApp.ViewModels
 		public Note Note { get; set; }
 		public Activity Activity { get; set; }
 		public DateTimeOffset LogDate { get; set; } = DateTimeOffset.Now.Date;
+		public string LogLabel { get; } = "ログ";
+		public string MemoLabel { get; } = "メモ";
 
 
 		public static List<Note> ChangeMemoListToNoteList(List<Memo> memoList)

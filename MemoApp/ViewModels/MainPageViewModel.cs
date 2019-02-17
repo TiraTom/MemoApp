@@ -20,13 +20,13 @@ namespace MemoApp.ViewModels
 			View = mainPage;
 		}
 
-		public string TaskChoiceLabel { get; set; } = "タスク選択";
-		public string TaskChoicePlaceholder { get; set; } = "タスクを選択してください";
-		public string StartLabel { get; set; } = "START";
-		public string PauseLabel { get; set; } = "PAUSE";
-		public string FinishLabel { get; set; } = "FINISH";
-		public string MemoLabel { get; set; } = "メモを残す";
-		public string RegisterButtonLabel { get; set; } = "登録";
+		public string TaskChoiceLabel { get; } = "タスク選択";
+		public string TaskChoicePlaceholder { get; } = "タスクを選択してください";
+		public string StartLabel { get; } = "START";
+		public string PauseLabel { get; } = "PAUSE";
+		public string FinishLabel { get; } = "FINISH";
+		public string MemoLabel { get; } = "メモを残す";
+		public string RegisterButtonLabel { get; } = "登録";
 		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.Date));
 		public List<Memo> MemoListData { get; set; } = default;
 		public string SelectedEachTaskId { get; set; }

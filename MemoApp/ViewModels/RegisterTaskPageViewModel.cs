@@ -13,12 +13,12 @@ namespace MemoApp.ViewModels
 	public class RegisterTaskPageViewModel : Helpers.Observable
 	{
 		public Views.RegisterTaskPage View { get; private set; } = null;
-		public string TitleLabel { get; set; } = "本日のタスク";
-		public string RegisterButtonLabel { get; set; } = "登録";
+		public string TitleLabel { get;  } = "本日のタスク";
+		public string RegisterButtonLabel { get;  } = "登録";
 		public string TaskData { get; set; } = default;
-		public string TaskDataPlaceHolder { get; set; } = "タスク入力欄\n\n「#」から始まる行は中タスク、「-」で始まる行は中タスクに属する小タスクとして認識されます。\n\n入力例）\n#カップラーメンを作る\n-ふたを開ける\n-お湯を注ぐ\n-３分待つ\n";
+		public string TaskDataPlaceHolder { get;  } = "タスク入力欄\n\n「#」から始まる行は中タスク、「-」で始まる行は中タスクに属する小タスクとして認識されます。\n\n入力例）\n#カップラーメンを作る\n-ふたを開ける\n-お湯を注ぐ\n-３分待つ\n";
 		public DateTimeOffset PlanDate {get; set;} = DateTimeOffset.Now ;
-		public string CalenderHeader { get; set; } = "Task of date";
+		public string CalenderHeader { get;  } = "Task of date";
 
 		public void Initialize(Views.RegisterTaskPage registerTaskPage)
 		{
