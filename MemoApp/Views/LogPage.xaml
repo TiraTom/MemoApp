@@ -85,7 +85,7 @@
 											Grid.Row="0"
 											HorizontalAlignment="Right"
 											FontSize="12"
-											Text="[" />
+											Text="[ " />
 										<TextBlock
 											x:Name="Start"
 											Grid.Row="0"
@@ -113,7 +113,7 @@
 											HorizontalAlignment="Left"
 											FontSize="12"
 											RelativePanel.RightOf="Stop"
-											Text="]" />
+											Text=" ]" />
 									</RelativePanel>
 									<TextBlock
 										Grid.Row="1"

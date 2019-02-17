@@ -50,6 +50,8 @@ namespace MemoApp.Models
 							EachTask = db.EachTasks.FirstOrDefault(eachTask => eachTask.EachTaskId == eachTaskId)
 						};
 						db.TimeInfos.Add(startTimeInfo);
+
+						selectedTask.StartedFlag = true;
 					}
 
 					notStoppedInfo.ForEach(timeInfo => timeInfo.Stop = DateTimeOffset.Now);
@@ -66,31 +68,30 @@ namespace MemoApp.Models
 		{
 			string msg = null;
 
-			using (var db = new MemoAppContext())
+			switch (CheckTaskStatus(eachTaskId))
 			{
-				EachTask thisTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
-				if (thisTask.CompleteFlag == true)
-				{
+				case TaskStatus.AlreadyPaused:
+					msg = "すでに一時停止中です。";
+					break;
+
+				case TaskStatus.AlreadyFinished:
 					msg = "すでに完了済みのタスクです。";
-				}
-				else
-				{
-					TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
+					break;
 
-					if (stopTimeInfo == null)
+				case TaskStatus.NoProblem:
+					using (var db = new MemoAppContext())
 					{
-						msg = "開始されていない　または　すでに一時停止中です。";
-					}
-					else
-					{
+						TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
 						stopTimeInfo.Stop = DateTimeOffset.Now;
-
-						EachTask completeTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
-						completeTask.CompleteFlag = true;
 
 						db.SaveChanges();
 					}
-				}
+					break;
+
+				case TaskStatus.NotYetStarted:
+					msg = "このタスクはまだ開始されていません。";
+					break;
+
 			}
 			return msg;
 		}
@@ -99,12 +100,58 @@ namespace MemoApp.Models
 		{
 			string msg = null;
 
+			switch (CheckTaskStatus(eachTaskId))
+			{
+				case TaskStatus.AlreadyPaused:
+					msg = "一時停止のまま、タスク完了となりました。";
+					using (var db = new MemoAppContext())
+					{
+						EachTask thisTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
+						thisTask.CompleteFlag = true;
+
+						db.SaveChanges();
+					}
+					break;
+
+				case TaskStatus.AlreadyFinished:
+					msg = "すでに完了済みのタスクです。";
+					break;
+
+				case TaskStatus.NoProblem:
+					using (var db = new MemoAppContext())
+					{
+						EachTask thisTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
+						thisTask.CompleteFlag = true;
+						TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
+						stopTimeInfo.Stop = DateTimeOffset.Now;
+
+						db.SaveChanges();
+					}
+					break;
+
+				case TaskStatus.NotYetStarted:
+					msg = "このタスクはまだ開始されていません。";
+					break;
+
+			}
+
+			return msg;
+
+		}
+
+
+		public static TaskStatus CheckTaskStatus(string eachTaskId)
+		{
 			using (var db = new MemoAppContext())
 			{
 				EachTask thisTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
 				if (thisTask.CompleteFlag == true)
 				{
-					msg = "すでに完了済みのタスクです。";
+					return TaskStatus.AlreadyFinished;
+				}
+				else if (thisTask.StartedFlag == false)
+				{
+					return TaskStatus.NotYetStarted;
 				}
 				else
 				{
@@ -112,23 +159,19 @@ namespace MemoApp.Models
 
 					if (stopTimeInfo == null)
 					{
-
-
-						msg = "一時停止のまま、タスク完了となりました。";
+						return TaskStatus.AlreadyPaused;
 					}
 					else
 					{
-						stopTimeInfo.Stop = DateTimeOffset.Now;
-
-						EachTask completeTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
-						completeTask.CompleteFlag = true;
-
-						db.SaveChanges();
+						return TaskStatus.NoProblem;
 					}
 				}
 			}
-
-			return msg;
 		}
+	}
+
+	public enum TaskStatus
+	{
+		NotYetStarted, AlreadyPaused, NoProblem, AlreadyFinished
 	}
 }

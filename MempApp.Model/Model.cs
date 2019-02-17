@@ -38,12 +38,13 @@ namespace MempApp.Model
 	{
 		public string EachTaskId { get; set; }
 		public string Content { get; set; } = default;
-		public DateTimeOffset DeadLine { get; set; } = default;
-		public DateTimeOffset PlanDate { get; set; } = default;
-		public DateTimeOffset RegisteredDate { get; set; } = default;
+		public DateTimeOffset DeadLine { get; set; }
+		public DateTimeOffset PlanDate { get; set; }
+		public DateTimeOffset RegisteredDate { get; set; }
 		public string Type { get; set; } = default;
 		public string ParentEachTaskId { get; set; } = null;
 		public bool CompleteFlag { get; set; } = false;
+		public bool StartedFlag { get; set; } = false;
 	}
 
 	public class TimeInfo
