@@ -17,7 +17,7 @@ namespace MemoApp.ViewModels
 		public string RegisterButtonLabel { get;  } = "登録";
 		public string TaskData { get; set; } = default;
 		public string TaskDataPlaceHolder { get;  } = "タスク入力欄\n\n「#」から始まる行は中タスク、「-」で始まる行は中タスクに属する小タスクとして認識されます。\n\n入力例）\n#カップラーメンを作る\n-ふたを開ける\n-お湯を注ぐ\n-３分待つ\n";
-		public DateTimeOffset PlanDate {get; set;} = DateTimeOffset.Now ;
+		public DateTimeOffset PlanDate {get; set;} = DateTimeOffset.Now.ToLocalTime();
 		public string CalenderHeader { get;  } = "Task of date";
 
 		public void Initialize(Views.RegisterTaskPage registerTaskPage)
@@ -48,7 +48,7 @@ namespace MemoApp.ViewModels
 				{
 					PlanDate = this.PlanDate,
 					Content = classificationTask,
-					RegisteredDate = DateTime.Now,
+					RegisteredDate = DateTime.Now.ToLocalTime(),
 
 				};
 
@@ -60,7 +60,7 @@ namespace MemoApp.ViewModels
 					EachTask newTask = new EachTask()
 					{
 						Content = eachTaskString.Substring(1),
-						RegisteredDate = DateTimeOffset.Now,
+						RegisteredDate = DateTimeOffset.Now.ToLocalTime(),
 						ParentEachTaskId = classificationId.ToString()
 					};
 					await EachTaskModel.RegisterTaskAsync(newTask);

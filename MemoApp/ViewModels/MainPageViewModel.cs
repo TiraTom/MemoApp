@@ -27,7 +27,7 @@ namespace MemoApp.ViewModels
 		public string FinishLabel { get; } = "FINISH";
 		public string MemoLabel { get; } = "メモを残す";
 		public string RegisterButtonLabel { get; } = "登録";
-		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.Date));
+		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.LocalDateTime));
 		public List<Memo> MemoListData { get; set; } = default;
 		public string SelectedEachTaskId { get; set; }
 		public string MemoContent { get; set; } = default;

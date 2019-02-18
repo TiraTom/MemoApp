@@ -29,9 +29,9 @@ namespace MemoApp.Helpers
 					{
 						Activity activity = new Activity()
 						{
-							ExactStartTime = timeInfo.Start,
-							StartTime = timeInfo.Start.ToString(" HH : mm "),
-							StopTime = timeInfo.Stop == DateTimeOffset.MinValue ? " XX : XX " : timeInfo.Stop.ToString(" HH : mm "),
+							ExactStartTime = timeInfo.Start.LocalDateTime,
+							StartTime = timeInfo.Start.LocalDateTime.ToString(" HH : mm "),
+							StopTime = timeInfo.Stop == DateTimeOffset.MinValue ? " XX : XX " : timeInfo.Stop.LocalDateTime.ToString(" HH : mm "),
 							TaskContent = eachTask.Content
 						};
 

@@ -28,7 +28,7 @@ namespace MemoApp.Models
 				{
 					Memo newMemo = new Memo
 					{
-						CreateTime = DateTime.Now,
+						CreateTime = DateTimeOffset.Now.ToLocalTime(),
 						Content = memoContent,
 						EachTask = targetTask
 					};
@@ -38,7 +38,7 @@ namespace MemoApp.Models
 				else
 				{
 					sameMemo.Content = memoContent;
-					sameMemo.UpdateTime = DateTimeOffset.Now;
+					sameMemo.UpdateTime = DateTimeOffset.Now.ToLocalTime();
 				}
 
 				db.SaveChanges();

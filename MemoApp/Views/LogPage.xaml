@@ -38,7 +38,7 @@
 		<CalendarDatePicker
 			x:Name="LogDateCalendarDatePicker"
 			Margin="0,3,0,10"
-			Date="{x:Bind ViewModel.LogDate}"
+			Date="{x:Bind ViewModel.LogDate, Mode=TwoWay}"
 			DateChanged="{x:Bind ViewModel.ShorOtherDateLog}"
 			IsTodayHighlighted="True" />
 

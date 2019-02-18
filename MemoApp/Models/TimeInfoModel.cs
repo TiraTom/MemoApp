@@ -46,7 +46,7 @@ namespace MemoApp.Models
 					{
 						TimeInfo startTimeInfo = new TimeInfo()
 						{
-							Start = DateTimeOffset.Now,
+							Start = DateTimeOffset.Now.ToLocalTime(),
 							EachTask = db.EachTasks.FirstOrDefault(eachTask => eachTask.EachTaskId == eachTaskId)
 						};
 						db.TimeInfos.Add(startTimeInfo);
@@ -54,7 +54,7 @@ namespace MemoApp.Models
 						selectedTask.StartedFlag = true;
 					}
 
-					notStoppedInfo.ForEach(timeInfo => timeInfo.Stop = DateTimeOffset.Now);
+					notStoppedInfo.ForEach(timeInfo => timeInfo.Stop = DateTimeOffset.Now.ToLocalTime());
 
 					db.SaveChanges();
 				}
@@ -82,7 +82,7 @@ namespace MemoApp.Models
 					using (var db = new MemoAppContext())
 					{
 						TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
-						stopTimeInfo.Stop = DateTimeOffset.Now;
+						stopTimeInfo.Stop = DateTimeOffset.Now.ToLocalTime();
 
 						db.SaveChanges();
 					}
@@ -123,7 +123,7 @@ namespace MemoApp.Models
 						EachTask thisTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == eachTaskId).FirstOrDefault();
 						thisTask.CompleteFlag = true;
 						TimeInfo stopTimeInfo = db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId && timeInfo.Stop == DateTimeOffset.MinValue).FirstOrDefault();
-						stopTimeInfo.Stop = DateTimeOffset.Now;
+						stopTimeInfo.Stop = DateTimeOffset.Now.ToLocalTime();
 
 						db.SaveChanges();
 					}

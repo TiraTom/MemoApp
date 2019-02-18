@@ -11,25 +11,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using static MemoApp.Views.LogPage;
 
 namespace MemoApp.ViewModels
 {
-	public class LogPageViewModel
+	public class LogPageViewModel 
 	{
 		public string TitleLabel { get; } = "行動ログ";
-		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now));
+		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.UtcNow));
 		public string TaskChoicePlaceholder { get; } = "すべてのタスク";
 		public string SelectedEachTaskId { get; set; }
 		public CalendarDatePicker LogDateCalendarDatePicker { get; set; } = new CalendarDatePicker();
-		public ObservableCollection<Activity> ActivityLog { get; set; } = new ObservableCollection<Activity>(ModelsHelpers.GetSpecificDateActivityLog(DateTimeOffset.Now));
-		public ObservableCollection<Note> NoteList { get; set; } = new ObservableCollection<Note>(ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(DateTimeOffset.Now)));
+		public ObservableCollection<Activity> ActivityLog { get; set; } = new ObservableCollection<Activity>(ModelsHelpers.GetSpecificDateActivityLog(DateTimeOffset.Now.ToLocalTime()));
+		public ObservableCollection<Note> NoteList { get; set; } = new ObservableCollection<Note>(ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(DateTimeOffset.Now.ToLocalTime())));
 		public Note Note { get; set; }
 		public Activity Activity { get; set; }
-		public DateTimeOffset LogDate { get; set; } = DateTimeOffset.Now.Date;
+		public DateTimeOffset LogDate { get; set; } = DateTimeOffset.Now.LocalDateTime;
 		public string LogLabel { get; } = "ログ";
 		public string MemoLabel { get; } = "メモ";
-
 
 		public static List<Note> ChangeMemoListToNoteList(List<Memo> memoList)
 		{
@@ -49,8 +49,12 @@ namespace MemoApp.ViewModels
 
 		public void ShorOtherDateLog()
 		{
-			ActivityLog = new ObservableCollection<Activity>(ModelsHelpers.GetSpecificDateActivityLog(Convert.ToDateTime(LogDate.Date)));
-			NoteList = new ObservableCollection<Note>(ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(Convert.ToDateTime(LogDate.Date))));
+			ActivityLog.Clear();
+			ModelsHelpers.GetSpecificDateActivityLog(Convert.ToDateTime(LogDate.LocalDateTime)).ForEach(activity => ActivityLog.Add(activity));
+
+			NoteList.Clear();
+			ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(Convert.ToDateTime(LogDate.LocalDateTime))).ForEach(memo => NoteList.Add(memo));
+			
 		}
 
 	}
