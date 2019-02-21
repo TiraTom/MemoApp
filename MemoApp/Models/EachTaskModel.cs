@@ -39,6 +39,11 @@ namespace MemoApp.Models
 
 		public static List<EachTask> GetSpecificDateEachTasks(DateTimeOffset specificDate)
 		{
+			if(specificDate == null)
+			{
+				return new List<EachTask>();
+			}
+
 			using (var db = new MemoAppContext())
 			{
 				return db.EachTasks.ToList().FindAll(eachTask => eachTask.PlanDate.Date == specificDate.Date);

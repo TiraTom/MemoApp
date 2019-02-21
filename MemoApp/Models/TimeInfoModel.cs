@@ -14,7 +14,7 @@ namespace MemoApp.Models
 		{
 			using (var db = new MemoAppContext())
 			{
-				return db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId).ToList();
+				return db.TimeInfos.Where(timeInfo => timeInfo.EachTask.EachTaskId == eachTaskId).Include(timeInfo => timeInfo.EachTask).ToList();
 			}
 		}
 

@@ -32,7 +32,8 @@ namespace MemoApp.Helpers
 							ExactStartTime = timeInfo.Start.LocalDateTime,
 							StartTime = timeInfo.Start.LocalDateTime.ToString(" HH : mm "),
 							StopTime = timeInfo.Stop == DateTimeOffset.MinValue ? " XX : XX " : timeInfo.Stop.LocalDateTime.ToString(" HH : mm "),
-							TaskContent = eachTask.Content
+							TaskContent = eachTask.Content,
+							EachTaskId = eachTask.EachTaskId
 						};
 
 						activityLog.Add(activity);
