@@ -10,7 +10,7 @@ using static MemoApp.Models.EachTaskModel;
 
 namespace MemoApp.ViewModels
 {
-	public class RegisterTaskPageViewModel : Helpers.Observable
+	public class RegisterTaskPageViewModel 
 	{
 		public Views.RegisterTaskPage View { get; private set; } = null;
 		public string TitleLabel { get;  } = "本日のタスク";

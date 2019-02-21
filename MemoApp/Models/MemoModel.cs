@@ -55,5 +55,14 @@ namespace MemoApp.Models
 				return memoList;
 			}
 		}
+
+		public static string GetSpecificEachTaskMemo(string eachTaskId)
+		{
+			using (var db = new MemoAppContext())
+			{
+				return db.Memos.Where(memo => memo.EachTask.EachTaskId == eachTaskId).FirstOrDefault()?.Content;
+			}
+		}
+
 	}
 }

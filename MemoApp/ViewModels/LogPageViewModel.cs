@@ -40,7 +40,6 @@ namespace MemoApp.ViewModels
 			}
 
 		}
-//		{ get; set; } = DateTimeOffset.Now.LocalDateTime;
 		public string SelectedEachTaskId { get; set; } = default;
 
 		public static List<Note> ChangeMemoListToNoteList(List<Memo> memoList)

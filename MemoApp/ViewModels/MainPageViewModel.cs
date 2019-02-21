@@ -3,6 +3,7 @@ using MempApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MemoApp.ViewModels
 {
-	public class MainPageViewModel : Helpers.Observable
+	public class MainPageViewModel : INotifyPropertyChanged
 	{
 		public Views.MainPage View { get; private set; } = null;
 
@@ -29,8 +30,30 @@ namespace MemoApp.ViewModels
 		public string RegisterButtonLabel { get; } = "登録";
 		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.LocalDateTime));
 		public List<Memo> MemoListData { get; set; } = default;
-		public string SelectedEachTaskId { get; set; }
-		public string MemoContent { get; set; } = default;
+		public string _selectedEachTaskId;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public string SelectedEachTaskId {
+			get { return this._selectedEachTaskId; }
+			set {
+				this._selectedEachTaskId = value;
+				MemoContent = MemoModel.GetSpecificEachTaskMemo(SelectedEachTaskId) ?? "";
+			}
+		}
+
+		public string _memoContent;
+		public string MemoContent
+		{
+			get { return this._memoContent; }
+			set {
+				if (this._memoContent == value) { return; }
+
+				this._memoContent = value;
+				this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MemoContent)));
+			}
+		}
+			
 		public string Msg { get; set; }
 
 
@@ -41,6 +64,12 @@ namespace MemoApp.ViewModels
 
 		public void MemoRegister(object sender, RoutedEventArgs e)
 		{
+			if (IsEachTaskIdEmpty())
+			{
+				NotifySystemMessage("タスクを選択してください");
+				return;
+			}
+
 			if (!string.IsNullOrWhiteSpace(MemoContent))
 			{
 				MemoModel.Register(SelectedEachTaskId, MemoContent);
@@ -49,32 +78,51 @@ namespace MemoApp.ViewModels
 
 		public void TaskStart(object sender, RoutedEventArgs e)
 		{
+			if (IsEachTaskIdEmpty())
+			{
+				NotifySystemMessage("タスクを選択してください");
+				return;
+			}
+
 			Msg = TimeInfoModel.RegisterStart(SelectedEachTaskId);
 			if (Msg != null)
 			{
-				NotifyTimeInfoCondition(Msg);
+				NotifySystemMessage(Msg);
 			}
+
 		}
 
 		public void TaskPause(object sender, RoutedEventArgs e)
 		{
+			if (IsEachTaskIdEmpty())
+			{
+				NotifySystemMessage("タスクを選択してください");
+				return;
+			}
+
 			Msg = TimeInfoModel.RegisterPause(SelectedEachTaskId);
 			if (Msg != null)
 			{
-				NotifyTimeInfoCondition(Msg);
+				NotifySystemMessage(Msg);
 			}
 		}
 
 		public void TaskStop(object sender, RoutedEventArgs e)
 		{
+			if (IsEachTaskIdEmpty())
+			{
+				NotifySystemMessage("タスクを選択してください");
+				return;
+			}
+
 			Msg = TimeInfoModel.RegisterStop(SelectedEachTaskId);
 			if (Msg != null)
 			{
-				NotifyTimeInfoCondition(Msg);
+				NotifySystemMessage(Msg);
 			}
 		}
 
-		public async void NotifyTimeInfoCondition(string msg)
+		public async void NotifySystemMessage(string msg)
 		{
 			ContentDialog timeInfoConditionMsg = new ContentDialog
 			{
@@ -85,5 +133,10 @@ namespace MemoApp.ViewModels
 
 			ContentDialogResult result = await timeInfoConditionMsg.ShowAsync();
 		}
+
+
+		public bool IsEachTaskIdEmpty() => SelectedEachTaskId == null ? true : false;
+
 	}
+
 }
