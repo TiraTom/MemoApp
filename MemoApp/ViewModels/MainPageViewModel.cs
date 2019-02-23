@@ -28,9 +28,11 @@ namespace MemoApp.ViewModels
 		public string FinishLabel { get; } = "FINISH";
 		public string MemoLabel { get; } = "メモを残す";
 		public string RegisterButtonLabel { get; } = "登録";
-		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.LocalDateTime));
+		public ObservableCollection<TaskDisplayInfo> TaskListData { get; set; } = new ObservableCollection<TaskDisplayInfo>(GetTaskDisplayInfo());
 		public List<Memo> MemoListData { get; set; } = default;
 		public string _selectedEachTaskId;
+		public TaskDisplayInfo TaskDisplayInfo { get; set; }
+
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -137,6 +139,30 @@ namespace MemoApp.ViewModels
 
 		public bool IsEachTaskIdEmpty() => SelectedEachTaskId == null ? true : false;
 
+
+		public static List<TaskDisplayInfo> GetTaskDisplayInfo()
+		{
+			List<EachTask> specificDateEachTaskList = EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.LocalDateTime).ToList();
+
+			List<TaskDisplayInfo> result = new List<TaskDisplayInfo>();
+			specificDateEachTaskList.ForEach(eachTask => {
+				TaskDisplayInfo info = new TaskDisplayInfo
+				{
+					EachTaskId = eachTask.EachTaskId,
+					Content =  (eachTask.CompleteFlag ? "✔ " : "      ") + eachTask.Content
+				};
+				result.Add(info);
+			});
+
+			return result;
+		}
+
+	}
+
+	public class TaskDisplayInfo
+	{
+		public string EachTaskId { get; set; } = default;
+		public string Content { get; set;  } = default;
 	}
 
 }

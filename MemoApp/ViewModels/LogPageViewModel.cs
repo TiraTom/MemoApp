@@ -133,7 +133,4 @@ namespace MemoApp.ViewModels
 		public string TaskContent { get; set; } = default;
 		public string EachTaskId { get; set; }
 	}
-
-
-
 }
