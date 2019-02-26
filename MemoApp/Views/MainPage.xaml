@@ -42,6 +42,29 @@
 				SelectedValue="{x:Bind ViewModel.SelectedEachTaskId, Mode=TwoWay}"
 				SelectedValuePath="EachTaskId" />
 
+			<StackPanel
+				Width="450"
+				Height="160"
+				Margin="0,5,0,5">
+				<ListView ItemsSource="{x:Bind ViewModel.SmallTaskListData, Mode=TwoWay}">
+					<ListView.ItemTemplate>
+						<DataTemplate x:Name="SmallTaskList" x:DataType="data:SmallTaskInfo">
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="20" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<RadioButton
+									x:Name="SmallTaskCompleteFlag"
+									Grid.Column="0"
+									Content="{x:Bind IsComplete}" />
+								<TextBlock Grid.Column="1" Text="{x:Bind Content}" />
+							</Grid>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackPanel>
+
 			<Grid
 				Margin="5,5,5,5"
 				Padding="5"

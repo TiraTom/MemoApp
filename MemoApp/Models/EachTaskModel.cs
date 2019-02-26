@@ -16,6 +16,17 @@ namespace MemoApp.Models
 			Classification,	Item
 		}
 
+		public static EachTask GetEachTask(string targetTaskId)
+		{
+			EachTask targetTask = new EachTask();
+
+			using (var db = new MemoAppContext())
+			{
+				targetTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == targetTaskId).FirstOrDefault();
+			}
+			return targetTask;
+		}
+
 
 
 		async public static Task<int> RegisterTaskAsync(EachTask newTask)
@@ -28,12 +39,13 @@ namespace MemoApp.Models
 			}
 		}
 
-		public static int RegisterTask(EachTask newTask)
+		public static string RegisterTask(EachTask newTask)
 		{
 			using (var db = new MemoAppContext())
 			{
 				db.EachTasks.Add(newTask);
-				return db.SaveChanges();
+				db.SaveChanges();
+				return GetEachTaskId(newTask);
 			}
 		}
 
@@ -46,7 +58,60 @@ namespace MemoApp.Models
 
 			using (var db = new MemoAppContext())
 			{
-				return db.EachTasks.ToList().FindAll(eachTask => eachTask.PlanDate.Date == specificDate.Date);
+				return db.EachTasks.ToList()
+							.FindAll(eachTask => eachTask.PlanDate.Date == specificDate.Date 
+												&& string.IsNullOrWhiteSpace(eachTask.ParentEachTaskId)
+												&& eachTask.ValidFlag == true)
+							.OrderBy(eachTask => eachTask.Rank)
+							.ToList();
+			}
+		}
+
+		public static List<EachTask> GetSpecificTaskSmallTasks(string eachTaskId)
+		{
+			if (string.IsNullOrWhiteSpace(eachTaskId))
+			{
+				return new List<EachTask>();
+			}
+
+			using (var db = new MemoAppContext())
+			{
+				return db.EachTasks.Where(eachTask => eachTask.ParentEachTaskId == eachTaskId && eachTask.ValidFlag == true)
+									.OrderBy(eachTask => eachTask.Rank).ToList();
+			}
+		}
+
+		public static string GetEachTaskId(EachTask targetTask)
+		{
+			using (var db = new MemoAppContext())
+			{
+				EachTask existEachTask = db.EachTasks.Where(eachTask =>
+											eachTask.Content == targetTask.Content 
+											&& eachTask.PlanDate.Date == targetTask.PlanDate.Date 
+											&& eachTask.ParentEachTaskId == targetTask.ParentEachTaskId)
+											.FirstOrDefault();
+
+				return existEachTask?.EachTaskId ?? string.Empty;
+			}
+		}
+
+		async public static Task UpdateTaskRankAsync(string newTaskId, int rank)
+		{
+			using (var db = new MemoAppContext())
+			{
+				EachTask targetTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == newTaskId).FirstOrDefault();
+				targetTask.Rank = rank;
+				await db.SaveChangesAsync();
+			}
+		}
+
+		public static void ChangeValidFlag(string targetTaskId, bool flagValue)
+		{
+			using (var db = new MemoAppContext())
+			{
+				EachTask targetTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == targetTaskId).FirstOrDefault();
+				targetTask.ValidFlag = flagValue;
+				db.SaveChanges();
 			}
 		}
 	}

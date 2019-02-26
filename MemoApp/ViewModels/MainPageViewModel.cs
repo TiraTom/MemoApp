@@ -30,17 +30,21 @@ namespace MemoApp.ViewModels
 		public string RegisterButtonLabel { get; } = "登録";
 		public ObservableCollection<TaskDisplayInfo> TaskListData { get; set; } = new ObservableCollection<TaskDisplayInfo>(GetTaskDisplayInfo());
 		public List<Memo> MemoListData { get; set; } = default;
-		public string _selectedEachTaskId;
 		public TaskDisplayInfo TaskDisplayInfo { get; set; }
-
+		public SmallTaskInfo SmallTaskInfo { get; set; }
+		public ObservableCollection<SmallTaskInfo> SmallTaskListData { get; set; } = new ObservableCollection<SmallTaskInfo>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public string SelectedEachTaskId {
+		public string _selectedEachTaskId;
+		public string SelectedEachTaskId
+		{
 			get { return this._selectedEachTaskId; }
-			set {
+			set
+			{
 				this._selectedEachTaskId = value;
 				MemoContent = MemoModel.GetSpecificEachTaskMemo(SelectedEachTaskId) ?? "";
+				SetSmallTaskInfo();
 			}
 		}
 
@@ -48,14 +52,15 @@ namespace MemoApp.ViewModels
 		public string MemoContent
 		{
 			get { return this._memoContent; }
-			set {
+			set
+			{
 				if (this._memoContent == value) { return; }
 
 				this._memoContent = value;
 				this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(MemoContent)));
 			}
 		}
-			
+
 		public string Msg { get; set; }
 
 
@@ -92,6 +97,7 @@ namespace MemoApp.ViewModels
 				NotifySystemMessage(Msg);
 			}
 
+			RefreshTaskListData();
 		}
 
 		public void TaskPause(object sender, RoutedEventArgs e)
@@ -122,6 +128,8 @@ namespace MemoApp.ViewModels
 			{
 				NotifySystemMessage(Msg);
 			}
+
+			RefreshTaskListData();
 		}
 
 		public async void NotifySystemMessage(string msg)
@@ -137,6 +145,7 @@ namespace MemoApp.ViewModels
 		}
 
 
+
 		public bool IsEachTaskIdEmpty() => SelectedEachTaskId == null ? true : false;
 
 
@@ -145,11 +154,12 @@ namespace MemoApp.ViewModels
 			List<EachTask> specificDateEachTaskList = EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.LocalDateTime).ToList();
 
 			List<TaskDisplayInfo> result = new List<TaskDisplayInfo>();
-			specificDateEachTaskList.ForEach(eachTask => {
+			specificDateEachTaskList.ForEach(eachTask =>
+			{
 				TaskDisplayInfo info = new TaskDisplayInfo
 				{
 					EachTaskId = eachTask.EachTaskId,
-					Content =  (eachTask.CompleteFlag ? "✔ " : "      ") + eachTask.Content
+					Content = (eachTask.CompleteFlag ? "✔" : "").PadRight(3) + eachTask.Content
 				};
 				result.Add(info);
 			});
@@ -157,12 +167,59 @@ namespace MemoApp.ViewModels
 			return result;
 		}
 
+		public void RefreshTaskListData()
+		{
+			TaskListData = new ObservableCollection<TaskDisplayInfo>(GetTaskDisplayInfo());
+		}
+
+		public void SetSmallTaskInfo()
+		{
+			List<EachTask> smallEachTaskList = EachTaskModel.GetSpecificTaskSmallTasks(SelectedEachTaskId);
+
+			SmallTaskListData.Clear();
+
+			smallEachTaskList.ForEach(eachSmallTask =>
+			{
+				SmallTaskInfo smallTaskInfo = new SmallTaskInfo()
+				{
+					EachTaskId = eachSmallTask.EachTaskId,
+					ParentEachTaskId = SelectedEachTaskId,
+					Content = eachSmallTask.Content,
+					IsComplete = eachSmallTask.CompleteFlag
+				};
+
+				SmallTaskListData.Add(smallTaskInfo);
+
+			});
+
+
+		}
+
 	}
 
 	public class TaskDisplayInfo
 	{
 		public string EachTaskId { get; set; } = default;
-		public string Content { get; set;  } = default;
+		public string Content { get; set; } = default;
 	}
+
+	public class SmallTaskInfo
+	{
+
+		public string EachTaskId { get; set; } = default;
+		public string ParentEachTaskId { get; set; } = default;
+
+		public bool _isComplete;
+		public bool IsComplete
+		{
+			get { return this._isComplete; }
+			set {
+				this._isComplete = value;
+
+			}
+		}
+
+		public string Content { get; set; } = default;
+}
 
 }

@@ -24,8 +24,8 @@ namespace MemoApp.ViewModels
 		public string MemoLabel { get; } = "メモ";
 		public string TitleLabel { get; } = "行動ログ";
 		public string TaskChoicePlaceholder { get; } = "すべてのタスク";
-		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.UtcNow));
-		public CalendarDatePicker logDateCalendarDatePicker { get; set; } = new CalendarDatePicker();
+		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.ToLocalTime()));
+		public CalendarDatePicker LogDateCalendarDatePicker { get; set; } = new CalendarDatePicker();
 		public ObservableCollection<Activity> ActivityLog { get; set; } = new ObservableCollection<Activity>(ModelsHelpers.GetSpecificDateActivityLog(DateTimeOffset.Now.ToLocalTime()));
 		public ObservableCollection<Note> NoteList { get; set; } = new ObservableCollection<Note>(ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(DateTimeOffset.Now.ToLocalTime())));
 		public Note Note { get; set; }

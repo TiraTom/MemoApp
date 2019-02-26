@@ -42,9 +42,11 @@ namespace MempApp.Model
 		public DateTimeOffset PlanDate { get; set; }
 		public DateTimeOffset RegisteredDate { get; set; }
 		public string Type { get; set; } = default;
-		public string ParentEachTaskId { get; set; } = null;
+		public string ParentEachTaskId { get; set; } = default;
 		public bool CompleteFlag { get; set; } = false;
 		public bool StartedFlag { get; set; } = false;
+		public int Rank { get; set; } = default;
+		public bool ValidFlag { get; set; } = true;
 	}
 
 	public class TimeInfo
