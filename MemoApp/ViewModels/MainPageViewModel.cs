@@ -31,8 +31,8 @@ namespace MemoApp.ViewModels
 		public ObservableCollection<TaskDisplayInfo> TaskListData { get; set; } = new ObservableCollection<TaskDisplayInfo>(GetTaskDisplayInfo());
 		public List<Memo> MemoListData { get; set; } = default;
 		public TaskDisplayInfo TaskDisplayInfo { get; set; }
-		public SmallTaskInfo SmallTaskInfo { get; set; }
 		public ObservableCollection<SmallTaskInfo> SmallTaskListData { get; set; } = new ObservableCollection<SmallTaskInfo>();
+
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -189,12 +189,8 @@ namespace MemoApp.ViewModels
 				};
 
 				SmallTaskListData.Add(smallTaskInfo);
-
 			});
-
-
 		}
-
 	}
 
 	public class TaskDisplayInfo
@@ -205,21 +201,14 @@ namespace MemoApp.ViewModels
 
 	public class SmallTaskInfo
 	{
-
 		public string EachTaskId { get; set; } = default;
 		public string ParentEachTaskId { get; set; } = default;
-
-		public bool _isComplete;
-		public bool IsComplete
-		{
-			get { return this._isComplete; }
-			set {
-				this._isComplete = value;
-
-			}
-		}
-
 		public string Content { get; set; } = default;
-}
+		public bool IsComplete { get; set; }
 
+		public async void ChangeSmallTaskCompleteFlag()
+		{
+			await TimeInfoModel.ChangeComplateFlag(EachTaskId, !IsComplete);
+		}
+	}
 }

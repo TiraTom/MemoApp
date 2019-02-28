@@ -168,6 +168,16 @@ namespace MemoApp.Models
 				}
 			}
 		}
+
+		async public static Task ChangeComplateFlag(string targetTaskId, bool flagValue)
+		{
+			using(var db = new MemoAppContext())
+			{
+				EachTask targetTask = db.EachTasks.Where(eachTask => eachTask.EachTaskId == targetTaskId).FirstOrDefault();
+				targetTask.CompleteFlag = flagValue;
+				await db.SaveChangesAsync();
+			}
+		} 
 	}
 
 	public enum TaskStatus
