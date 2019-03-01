@@ -33,7 +33,6 @@ namespace MemoApp.Models
 		{
 			using (var db = new MemoAppContext())
 			{
-
 				db.EachTasks.Add(newTask);
 				return await db.SaveChangesAsync();
 			}

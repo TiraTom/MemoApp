@@ -10,6 +10,7 @@ namespace MempApp.Model
 		public DbSet<EachTask> EachTasks { get; set; }
 		public DbSet<Memo> Memos { get; set; }
 		public DbSet<TimeInfo> TimeInfos { get; set; }
+		public DbSet<Config> Configs { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -55,5 +56,11 @@ namespace MempApp.Model
 		public DateTimeOffset Start { get; set; }
 		public DateTimeOffset Stop { get; set; }
 		public EachTask EachTask { get; set; }
+	}
+
+	public class Config
+	{
+		public string ConfigId { get; set; } 
+		public string Value { get; set; } 
 	}
 }

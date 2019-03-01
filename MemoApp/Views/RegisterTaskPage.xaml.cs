@@ -47,5 +47,10 @@ namespace MemoApp.Views
 		{
 			Frame.Navigate(typeof(LogPage));
 		}
+
+		public void MoveConfigPage(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(ConfigPage));
+		}
 	}
 }

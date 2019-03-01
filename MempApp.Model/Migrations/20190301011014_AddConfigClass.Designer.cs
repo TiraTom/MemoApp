@@ -3,30 +3,20 @@ using System;
 using MempApp.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MempApp.Model.Migrations
 {
     [DbContext(typeof(MemoAppContext))]
-    partial class MemoAppContextModelSnapshot : ModelSnapshot
+    [Migration("20190301011014_AddConfigClass")]
+    partial class AddConfigClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.1-servicing-10028");
-
-            modelBuilder.Entity("MempApp.Model.Config", b =>
-                {
-                    b.Property<string>("ConfigId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("ConfigId");
-
-                    b.ToTable("Configs");
-                });
 
             modelBuilder.Entity("MempApp.Model.EachTask", b =>
                 {

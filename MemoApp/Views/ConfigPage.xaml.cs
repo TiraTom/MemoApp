@@ -1,5 +1,4 @@
-﻿using MemoApp.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,12 +20,12 @@ namespace MemoApp.Views
 	/// <summary>
 	/// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
 	/// </summary>
-	public sealed partial class LogPage : Page
+	public sealed partial class ConfigPage : Page
 	{
-		public ViewModels.LogPageViewModel ViewModel { get; private set; } = new ViewModels.LogPageViewModel();
+		public ViewModels.ConfigPageViewModel ViewModel { get; private set; } = new ViewModels.ConfigPageViewModel();
 		public ViewModels.CommonViewModel Common { get; private set; } = new ViewModels.CommonViewModel();
 
-		public LogPage()
+		public ConfigPage()
 		{
 			this.InitializeComponent();
 		}

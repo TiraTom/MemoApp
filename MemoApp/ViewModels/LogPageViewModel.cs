@@ -19,7 +19,6 @@ namespace MemoApp.ViewModels
 {
 	public class LogPageViewModel
 	{
-
 		public string LogLabel { get; } = "ログ";
 		public string MemoLabel { get; } = "メモ";
 		public string TitleLabel { get; } = "行動ログ";
@@ -59,9 +58,6 @@ namespace MemoApp.ViewModels
 			return noteList;
 		}
 
-		public void PageLoaded()
-		{
-		}
 
 		private void AddAllTask()
 		{

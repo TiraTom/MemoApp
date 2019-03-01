@@ -27,6 +27,10 @@
 				VerticalAlignment="Stretch"
 				Click="{x:Bind MoveLogPage}"
 				Content="{x:Bind Common.LogPageButtonLabel}" />
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Click="{x:Bind MoveConfigPage}"
+				Content="{x:Bind Common.ConfigPageButtonLabel}" />
 		</StackPanel>
 		<StackPanel>
 			<ComboBox

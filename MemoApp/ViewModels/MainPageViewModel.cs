@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -32,6 +33,8 @@ namespace MemoApp.ViewModels
 		public List<Memo> MemoListData { get; set; } = default;
 		public TaskDisplayInfo TaskDisplayInfo { get; set; }
 		public ObservableCollection<SmallTaskInfo> SmallTaskListData { get; set; } = new ObservableCollection<SmallTaskInfo>();
+		private ThreadPoolTimer NotifyRestTime;
+
 
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -66,8 +69,8 @@ namespace MemoApp.ViewModels
 
 		public void Page_Loaded(object sender, RoutedEventArgs e)
 		{
-
 		}
+
 
 		public void MemoRegister(object sender, RoutedEventArgs e)
 		{
@@ -98,6 +101,14 @@ namespace MemoApp.ViewModels
 			}
 
 			RefreshTaskListData();
+
+			NotifyRestTime = ThreadPoolTimer.CreatePeriodicTimer((source) =>
+			{
+				Notification notification = new Notification();
+				notification.NotifyRestTime();
+			}, TimeSpan.FromMinutes(float.Parse(ConfigModel.GetSpecificConfigValue(ConfigModel.ConfigType.NotificationSpanMinute))));
+
+
 		}
 
 		public void TaskPause(object sender, RoutedEventArgs e)
@@ -113,6 +124,8 @@ namespace MemoApp.ViewModels
 			{
 				NotifySystemMessage(Msg);
 			}
+
+			NotifyRestTime.Cancel();
 		}
 
 		public void TaskStop(object sender, RoutedEventArgs e)
@@ -130,6 +143,8 @@ namespace MemoApp.ViewModels
 			}
 
 			RefreshTaskListData();
+
+			NotifyRestTime.Cancel();
 		}
 
 		public async void NotifySystemMessage(string msg)

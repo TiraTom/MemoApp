@@ -7,7 +7,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	Margin="5,10,5,10"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	Loaded="{x:Bind ViewModel.PageLoaded}"
 	mc:Ignorable="d">
 
 	<StackPanel
@@ -32,6 +31,10 @@
 				Background="DarkGray"
 				Click="{x:Bind MoveLogPage}"
 				Content="{x:Bind Common.LogPageButtonLabel}" />
+			<ToggleButton
+				VerticalAlignment="Stretch"
+				Click="{x:Bind MoveConfigPage}"
+				Content="{x:Bind Common.ConfigPageButtonLabel}" />
 		</StackPanel>
 
 		<TextBlock Text="{x:Bind ViewModel.TitleLabel}" />
