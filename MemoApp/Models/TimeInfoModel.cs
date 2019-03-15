@@ -10,7 +10,7 @@ namespace MemoApp.Models
 {
 	public static class TimeInfoModel
 	{
-		public static List<TimeInfo> GetSpecifigTaskTimeInfo(string eachTaskId)
+		public static List<TimeInfo> GetSpecificTaskTimeInfo(string eachTaskId)
 		{
 			using (var db = new MemoAppContext())
 			{
@@ -178,6 +178,17 @@ namespace MemoApp.Models
 				await db.SaveChangesAsync();
 			}
 		} 
+
+		public static string AlreadyStartedEachTaskId(DateTimeOffset dateTime)
+		{
+			using(var db = new MemoAppContext())
+			{
+				return db.TimeInfos.Where(timeInfo => timeInfo.Stop == DateTimeOffset.MinValue && timeInfo.Start.Date == dateTime.Date)
+									  .Include(timeInfo => timeInfo.EachTask)
+								   .FirstOrDefault()?
+								   .EachTask?.EachTaskId;
+			}
+		}
 	}
 
 	public enum TaskStatus

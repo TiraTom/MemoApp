@@ -22,7 +22,6 @@ namespace MemoApp.ViewModels
 			View = mainPage;
 		}
 
-		public string TaskChoiceLabel { get; } = "タスク選択";
 		public string TaskChoicePlaceholder { get; } = "タスクを選択してください";
 		public string StartLabel { get; } = "START";
 		public string PauseLabel { get; } = "PAUSE";
@@ -39,14 +38,27 @@ namespace MemoApp.ViewModels
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public string _selectedEachTaskId;
+		public string _taskChoiceLabel = $"タスク選択  {ShowRecentInfo()}";
+		public string TaskChoiceLabel
+		{
+			get { return this._taskChoiceLabel; }
+			set
+			{
+				if (this._taskChoiceLabel == value) { return; }
+				this._taskChoiceLabel = value;
+				this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TaskChoiceLabel)));
+			}
+		}
+
+
+		public string _selectedEachTaskId = CommonViewModel.RecentSelectedEachTaskId;
 		public string SelectedEachTaskId
 		{
 			get { return this._selectedEachTaskId; }
 			set
 			{
 				this._selectedEachTaskId = value;
-				MemoContent = MemoModel.GetSpecificEachTaskMemo(SelectedEachTaskId) ?? "";
+				MemoContent = MemoModel.GetSpecificEachTaskMemo(this._selectedEachTaskId) ?? "";
 				SetSmallTaskInfo();
 			}
 		}
@@ -64,13 +76,54 @@ namespace MemoApp.ViewModels
 			}
 		}
 
+		
+		public string _recentActionInfo = CommonViewModel.RecentActionStatus;
+		public string RecentActionInfo
+		{
+			get { return this._recentActionInfo; }
+			set
+			{
+				if (this._recentActionInfo == value) { return; }
+
+				this._recentActionInfo = value;
+				this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(RecentActionInfo)));
+			}
+		}
+
 		public string Msg { get; set; }
 
 
 		public void Page_Loaded(object sender, RoutedEventArgs e)
 		{
+			SetSmallTaskInfo();
 		}
 
+
+		public void SetRecentInfo(string action)
+		{
+			CommonViewModel.RecentSelectedEachTaskId = SelectedEachTaskId;
+			CommonViewModel.RecentActionStatus = action;
+
+			TaskChoiceLabel = $"タスク選択  {ShowRecentInfo()}";
+
+	}
+
+	public static string ShowRecentInfo()
+		{
+			if (!string.IsNullOrWhiteSpace(CommonViewModel.RecentActionStatus) 
+					&& EachTaskModel.IsSpecificDateTask(CommonViewModel.RecentSelectedEachTaskId, DateTimeOffset.Now.LocalDateTime.Date)){
+
+				EachTask eachTask = EachTaskModel.GetEachTask(CommonViewModel.RecentSelectedEachTaskId);
+
+				return $"現在の状態：{eachTask.Content} {CommonViewModel.RecentActionStatus}";
+			}
+			else
+			{
+
+				return $"現在の状態：1日の作業開始前";
+			}
+
+		}
 
 		public void MemoRegister(object sender, RoutedEventArgs e)
 		{
@@ -100,8 +153,6 @@ namespace MemoApp.ViewModels
 				NotifySystemMessage(Msg);
 			}
 
-			RefreshTaskListData();
-
 			NotifyRestTime = ThreadPoolTimer.CreatePeriodicTimer((source) =>
 			{
 				Notification notification = new Notification();
@@ -109,6 +160,7 @@ namespace MemoApp.ViewModels
 			}, TimeSpan.FromMinutes(float.Parse(ConfigModel.GetSpecificConfigValue(ConfigModel.ConfigType.NotificationSpanMinute))));
 
 
+			SetRecentInfo("実行中");
 		}
 
 		public void TaskPause(object sender, RoutedEventArgs e)
@@ -125,7 +177,15 @@ namespace MemoApp.ViewModels
 				NotifySystemMessage(Msg);
 			}
 
-			NotifyRestTime.Cancel();
+			if (NotifyRestTime != null)
+			{
+				NotifyRestTime.Cancel();
+			}
+
+			CommonViewModel.RecentSelectedEachTaskId = SelectedEachTaskId;
+
+			SetRecentInfo("中断中");
+
 		}
 
 		public void TaskStop(object sender, RoutedEventArgs e)
@@ -142,9 +202,15 @@ namespace MemoApp.ViewModels
 				NotifySystemMessage(Msg);
 			}
 
-			RefreshTaskListData();
+			if (NotifyRestTime != null)
+			{
+				NotifyRestTime.Cancel();
+			}
 
-			NotifyRestTime.Cancel();
+			CommonViewModel.RecentSelectedEachTaskId = SelectedEachTaskId;
+
+			SetRecentInfo("完了済");
+
 		}
 
 		public async void NotifySystemMessage(string msg)
@@ -181,12 +247,7 @@ namespace MemoApp.ViewModels
 
 			return result;
 		}
-
-		public void RefreshTaskListData()
-		{
-			TaskListData = new ObservableCollection<TaskDisplayInfo>(GetTaskDisplayInfo());
-		}
-
+		
 		public void SetSmallTaskInfo()
 		{
 			List<EachTask> smallEachTaskList = EachTaskModel.GetSpecificTaskSmallTasks(SelectedEachTaskId);

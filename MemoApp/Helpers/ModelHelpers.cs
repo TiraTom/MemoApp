@@ -23,7 +23,7 @@ namespace MemoApp.Helpers
 
 				foreach (var eachTask in eachTaskList)
 				{
-					List<TimeInfo> timeInfoList = TimeInfoModel.GetSpecifigTaskTimeInfo(eachTask.EachTaskId);
+					List<TimeInfo> timeInfoList = TimeInfoModel.GetSpecificTaskTimeInfo(eachTask.EachTaskId);
 
 					foreach(TimeInfo timeInfo in timeInfoList)
 					{

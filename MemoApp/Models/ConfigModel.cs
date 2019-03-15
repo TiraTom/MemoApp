@@ -55,7 +55,9 @@ namespace MemoApp.Models
 		public enum ConfigType
 		{
 			NotificationFlag,
-			NotificationSpanMinute
+			NotificationSpanMinute,
+			RecentEachTaskId,
+			RecentActivity
 		}
 	}
 }

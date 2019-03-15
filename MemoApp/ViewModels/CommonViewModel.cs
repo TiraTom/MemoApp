@@ -1,6 +1,7 @@
 ﻿using MemoApp.Views;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +10,14 @@ using Windows.UI.Xaml.Controls;
 
 namespace MemoApp.ViewModels
 {
-    public class CommonViewModel　
-    {
+	public class CommonViewModel
+	{
 		public string MainPageButtonLabel = "[メ]";
 		public string RegisterPageButtonLabel { get; set; } = "[タ]";
 		public string LogPageButtonLabel { get; set; } = "[ロ]";
 		public string ConfigPageButtonLabel { get; set; } = "[コ]";
 
-
-
+		public static string RecentSelectedEachTaskId { get; set; }
+		public static string RecentActionStatus { get; set; }
 	}
 }

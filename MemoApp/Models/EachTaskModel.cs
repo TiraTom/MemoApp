@@ -27,6 +27,12 @@ namespace MemoApp.Models
 			return targetTask;
 		}
 
+		public static bool IsSpecificDateTask(string eachTaskId, DateTimeOffset specificDateTime)
+		{
+			EachTask targetTask = GetEachTask(eachTaskId);
+
+			return targetTask?.PlanDate.Date == specificDateTime.Date ? true : false;
+		}
 
 
 		async public static Task<int> RegisterTaskAsync(EachTask newTask)

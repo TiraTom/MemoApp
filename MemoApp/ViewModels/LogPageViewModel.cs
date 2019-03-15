@@ -23,7 +23,7 @@ namespace MemoApp.ViewModels
 		public string MemoLabel { get; } = "メモ";
 		public string TitleLabel { get; } = "行動ログ";
 		public string TaskChoicePlaceholder { get; } = "すべてのタスク";
-		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(EachTaskModel.GetSpecificDateEachTasks(DateTimeOffset.Now.ToLocalTime()));
+		public ObservableCollection<EachTask> TaskListData { get; set; } = new ObservableCollection<EachTask>(GetSpecificDateEachTaskList(DateTimeOffset.Now.ToLocalTime()));
 		public CalendarDatePicker LogDateCalendarDatePicker { get; set; } = new CalendarDatePicker();
 		public ObservableCollection<Activity> ActivityLog { get; set; } = new ObservableCollection<Activity>(ModelsHelpers.GetSpecificDateActivityLog(DateTimeOffset.Now.ToLocalTime()));
 		public ObservableCollection<Note> NoteList { get; set; } = new ObservableCollection<Note>(ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(DateTimeOffset.Now.ToLocalTime())));
@@ -59,11 +59,11 @@ namespace MemoApp.ViewModels
 		}
 
 
-		private void AddAllTask()
+		private static List<EachTask> AddAllTask(List<EachTask> baseList)
 		{
-			if (TaskListData.Count > 1)
+			if (baseList.Count > 1)
 			{
-				if (!TaskListData.Any(eachTask => eachTask.Content == "全て"))
+				if (!baseList.Any(eachTask => eachTask.Content == "全て"))
 				{
 
 					EachTask all = new EachTask()
@@ -72,9 +72,11 @@ namespace MemoApp.ViewModels
 						Content = "全て"
 					};
 
-					TaskListData.Insert(0, all);
+					baseList.Insert(0, all);
 				}
 			}
+
+			return baseList;
 		}
 
 		public void ShowSpecificTaskLog()
@@ -100,9 +102,8 @@ namespace MemoApp.ViewModels
 
 			TaskListData.Clear();
 
-			List<EachTask> specificTaskList = EachTaskModel.GetSpecificDateEachTasks(LogDate);
+			List<EachTask> specificTaskList = GetSpecificDateEachTaskList(LogDate);
 			specificTaskList.ForEach(eachTask => TaskListData.Add(eachTask));
-			AddAllTask();
 
 			ActivityLog.Clear();
 			ModelsHelpers.GetSpecificDateActivityLog(LogDate).ForEach(activity => ActivityLog.Add(activity));
@@ -110,6 +111,16 @@ namespace MemoApp.ViewModels
 			NoteList.Clear();
 			ChangeMemoListToNoteList(MemoModel.GetSpecificDateMemo(LogDate)).ForEach(memo => NoteList.Add(memo));
 		}
+
+		public static List<EachTask> GetSpecificDateEachTaskList(DateTimeOffset specificDatetime)
+		{
+			List<EachTask> eachTaskList = new List<EachTask>();
+
+			eachTaskList.AddRange(EachTaskModel.GetSpecificDateEachTasks(specificDatetime));
+			eachTaskList = AddAllTask(eachTaskList);
+
+			return eachTaskList;
+		} 
 
 	}
 
